@@ -5,8 +5,9 @@ const passport = require('../config/passport')
 
 const admin = require('./modules/admin')
 
-const vsignController = require('../controllers/vsign-controller')
+const patientController = require('../controllers/patient-controller')
 const userController = require('../controllers/user-controller')
+const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
 router.use('/admin', admin)
@@ -18,9 +19,9 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.get('/logout', userController.logout)
 
-router.get('/vsigns', vsignController.getVsigns)
+router.get('/patients', authenticated, patientController.getPatients)
 
-router.get('/', (req, res) => { res.redirect('/vsigns') })
+router.get('/', (req, res) => { res.redirect('/patients') })
 router.use('/', generalErrorHandler)
 
 module.exports = router

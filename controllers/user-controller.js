@@ -29,8 +29,13 @@ const userController = {
     res.render('signin')
   },
   signIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    res.redirect('/vsigns')
+    if (req.user.dataValues.isAdmin) {
+      req.flash('success_messages', '後臺登入！')
+      res.redirect('/admin/patients')
+    } else {
+      req.flash('success_messages', '成功登入！')
+      res.redirect('/patients')
+    }
   },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
