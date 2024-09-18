@@ -10,19 +10,19 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       temperature: {
-        type: Sequelize.FLOAT
+        type: Sequelize.STRING
       },
       heart_rate: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       blood_pressure: {
         type: Sequelize.STRING
       },
       gluac: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       glupc: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       description: {
         type: Sequelize.TEXT

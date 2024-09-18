@@ -15,10 +15,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Patient.init({
     temperature: DataTypes.FLOAT,
-    heartRate: DataTypes.INTEGER,
+    heartRate: DataTypes.STRING,
     bloodPressure: DataTypes.STRING,
-    gluac: DataTypes.INTEGER,
-    glupc: DataTypes.INTEGER,
+    gluac: DataTypes.STRING,
+    glupc: DataTypes.STRING,
     description: DataTypes.TEXT
   }, {
     sequelize,
