@@ -1,1 +1,46 @@
-<div>patient's daily data</div>
+<h1>我的健康數據</h1>
+
+<a href='/patients/create'>
+  <button type="button" class="btn btn-primary">新增數據</button>
+</a>
+
+<br />
+<br />
+
+<table class="table align-middle">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">體溫 (℃)</th>
+      <th scope="col">心跳 (bpm)</th>
+      <th scope="col">血壓 (mmHg)</th>
+      <th scope="col">飯前血糖 (mg/dl)</th>
+      <th scope="col">飯後血糖 (mg/dl)</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#each patients}}
+    <tr>
+      <th scope="row">{{this.id}}</th>
+      <td>{{this.temperature}}</td>
+      <td>{{this.heartRate}}</td>
+      <td>{{this.bloodPressure}}</td>
+      <td>{{this.gluac}}</td>
+      <td>{{this.gluc}}</td>
+      <td>
+        <button type="button" class="btn btn-link">
+          <a class="btn btn-link link-primary" href="/patients/{{this.id}}">詳細資訊</a>
+        </button>
+        <button type="button" class="btn btn-link">
+          <a class="btn btn-link link-primary" href="/patients/{{this.id}}/edit">更新</a>
+        </button>
+        <form action="/patients/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+          <button type="submit" class="btn btn-link link-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
