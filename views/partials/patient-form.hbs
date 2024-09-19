@@ -1,0 +1,24 @@
+<div class="form-row mb-3">
+  <label class="form-label" for="temperature">體溫</label>
+  <input class="form-control" type="text" name="temperature" id="temperature" placeholder="請輸入體溫" value="{{patient.temperature}}" required>
+</div>
+<div class="form-row mb-3">
+  <label class="form-label" for="heartRate">心跳</label>
+  <input class="form-control" type="text" name="heartRate" id="heartRate" placeholder="請輸入心跳" value="{{patient.heartRate}}" required>
+</div>
+<div class="form-row mb-3">
+  <label class="form-label" for="bloodPressure">血壓</label>
+  <input class="form-control" type="text" name="bloodPressure" id="bloodPressure" placeholder="請輸入血壓" value="{{patient.bloodPressure}}" required>
+</div>
+<div class="form-row mb-3">
+  <label class="form-label" for="gluac">飯前血糖</label>
+  <input class="form-control" type="text" name="gluac" id="gluac" placeholder="請輸入飯前血糖" value="{{patient.gluac}}">
+</div>
+<div class="form-row mb-3"></div>
+  <label class="form-label" for="glupc">飯後血糖</label>
+  <input class="form-control" type="text" name="glupc" id="glupc" placeholder="請輸入飯後血糖" value="{{patient.glupc}}">
+</div>
+<div class="form-row mb-3">
+  <label class="form-label" for="description">自我描述</label>
+  <textarea class="form-control" id="description" name="description" rows="3">{{patient.description}}</textarea>
+</div>
