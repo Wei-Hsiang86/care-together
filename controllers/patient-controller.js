@@ -34,6 +34,16 @@ const patientController = {
         res.redirect('/patients')
       })
       .catch(err => next(err))
+  },
+  getPatient: (req, res, next) => {
+    Patient.findByPk(req.params.id, {
+      raw: true
+    })
+      .then(patient => {
+        if (!patient) throw new Error('查詢不到數據紀錄!')
+        res.render('patient', { patient })
+      })
+      .catch(err => next(err))
   }
 }
 module.exports = patientController

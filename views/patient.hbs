@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-12">
+    <h3>{{inputTime patient.createdAt}} 資料</h3>
+  </div>
+  <div class="col-md-4">
+    <div class="well">
+      <ul class="list-unstyled">
+        <li><strong>體溫:</strong> {{patient.temperature}}</li>
+        <li><strong>心跳:</strong> {{patient.heartRate}}</li>
+        <li><strong>血壓:</strong> {{patient.bloodPressure}}</li>
+        <li><strong>飯前血糖:</strong> {{patient.gluac}}</li>
+        <li><strong>飯後血糖:</strong> {{patient.glupc}}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <p style="white-space: break-spaces;"><strong>個人描述：</strong></p>
+    <p style="white-space: break-spaces;">{{patient.description}}</p>
+  </div>
+  <hr>
+</div>
+<a class="btn btn-outline-secondary" href="javascript:history.back()">Back</a>
