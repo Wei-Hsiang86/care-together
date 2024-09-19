@@ -23,7 +23,7 @@
   <tbody>
     {{#each patients}}
     <tr>
-      <th scope="row">{{this.id}}</th>
+      <th scope="row"></th>
       <td>{{this.temperature}}</td>
       <td>{{this.heartRate}}</td>
       <td>{{this.bloodPressure}}</td>
@@ -37,7 +37,7 @@
           <a class="btn btn-link link-primary" href="/patients/{{this.id}}/edit">更新</a>
         </button>
         <form action="/patients/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-          <button type="submit" class="btn btn-link link-danger">Delete</button>
+          <button type="submit" class="btn btn-link link-danger" onclick="return confirm(`確定要刪除此筆資料嗎？`)">Delete</button>
         </form>
       </td>
     </tr>

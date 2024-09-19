@@ -23,6 +23,7 @@ router.get('/patients/create', patientController.createPatient)
 router.get('/patients/:id/edit', patientController.editPatient)
 router.get('/patients/:id', patientController.getPatient)
 router.put('/patients/:id', patientController.putPatient)
+router.delete('/patients/:id', patientController.deleteRestaurant)
 router.get('/patients', authenticated, patientController.getPatients)
 router.post('/patients', authenticated, patientController.postPatient)
 

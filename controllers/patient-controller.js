@@ -79,6 +79,16 @@ const patientController = {
         res.redirect('/patients')
       })
       .catch(err => next(err))
+  },
+  deleteRestaurant: (req, res, next) => {
+    return Patient.findByPk(req.params.id)
+      .then(patient => {
+        if (!patient) throw new Error('查詢不到數據紀錄!')
+
+        return patient.destroy()
+      })
+      .then(() => res.redirect('/patients'))
+      .catch(err => next(err))
   }
 }
 module.exports = patientController
