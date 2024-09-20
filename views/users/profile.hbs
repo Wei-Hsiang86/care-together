@@ -1,0 +1,31 @@
+{{!-- profile --}}
+<div class="container d-none d-md-block">
+  <div class="card my-3">
+    <div class="row g-1">
+      <div class="col-md-4">
+        {{#if userProfile.photo}}
+        <img src="{{userProfile.photo}}" width="300px" height="300px" style="transition: opacity 0.5s; opacity:0;"
+          onload="this.style.opacity=1;" />
+        {{else}}
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhZof730mrjOz5V7uKnP6I7WHry7hAdRVFTuEvTIDTnty5Vjrm6JHqh5jfCJp7VRE4TubG8EDyYT-loxD9q3z1rtyLxNEo51yXcePHsM41xaf2Fp54Ibmj1NlxjVDZcoVS3a1jI0y22uo/s800/search_mushimegane.png" width="300px" height="300px" style="transition: opacity 0.5s; opacity:0;"
+          onload="this.style.opacity=1;" />
+        {{/if}}
+      </div>
+
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title"><i class="fa-regular fa-circle-user"></i> <strong>姓名：{{userProfile.name}}</strong></h5>
+          <p class="card-text"><i class="fa-solid fa-at fa-lg"></i> <strong>信箱：{{userProfile.email}}</strong></p>
+          <p class="card-text"><i class="fa-regular fa-address-book fa-lg"></i> <strong>自我介紹：</strong></p>
+          <p class="card-text">{{userProfile.intro}}</p>
+
+          {{#ifCond userProfile.id user.id}}
+          <a href="/users/{{user.id}}/edit" class="btn btn-primary">編輯</a>
+          {{/ifCond}}
+
+          <a class="btn btn-outline-secondary" href="javascript:history.back()">返回</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,8 @@ const admin = require('./modules/admin')
 
 const userController = require('../controllers/user-controller')
 const patientController = require('../controllers/patient-controller')
+
+const upload = require('../middleware/multer')
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
@@ -18,6 +20,10 @@ router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.get('/logout', userController.logout)
+
+router.get('/users/:id/edit', authenticated, userController.editUser)
+router.get('/users/:id', authenticated, userController.getUser)
+router.put('/users/:id', authenticated, upload.single('photo'), userController.putUser) // 注意 single 內參數名稱，要與 form 表單 name 屬性名稱一致
 
 router.get('/patients/create', patientController.createPatient)
 router.get('/patients/:id/edit', patientController.editPatient)

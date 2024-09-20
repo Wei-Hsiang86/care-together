@@ -84,7 +84,6 @@ const patientController = {
     return Patient.findByPk(req.params.id)
       .then(patient => {
         if (!patient) throw new Error('查詢不到數據紀錄!')
-
         return patient.destroy()
       })
       .then(() => res.redirect('/patients'))

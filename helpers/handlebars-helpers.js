@@ -11,5 +11,8 @@ module.exports = {
     return dayjs(time)
       .tz('Asia/Taipei')
       .format('YYYY/MM/DD HH:mm:ss')
+  },
+  ifCond: function (a, b, options) {
+    return a === b ? options.fn(this) : options.inverse(this)
   }
 }
