@@ -8,6 +8,11 @@ function getRandomInt (max) {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    const users = await queryInterface.sequelize.query(
+      'SELECT id FROM Users;',
+      { type: queryInterface.sequelize.QueryTypes.SELECT }
+    )
+
     await queryInterface.bulkInsert('Patients',
       Array.from({ length: 50 }, () => ({
         temperature: 35 + getRandomInt(41) / 10,
@@ -17,7 +22,8 @@ module.exports = {
         glupc: 68 + getRandomInt(81),
         description: faker.lorem.text(),
         created_at: new Date(),
-        updated_at: new Date()
+        updated_at: new Date(),
+        user_id: users[Math.floor(Math.random() * users.length)].id
       }))
     )
   },
