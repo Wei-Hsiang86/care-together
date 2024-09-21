@@ -17,7 +17,7 @@ module.exports = {
       Array.from({ length: 50 }, () => ({
         temperature: 35 + getRandomInt(41) / 10,
         heart_rate: 55 + getRandomInt(51),
-        blood_pressure: `${55 + getRandomInt(31)} / ${85 + getRandomInt(41)}`,
+        blood_pressure: `${85 + getRandomInt(41)} / ${55 + getRandomInt(31)}`,
         gluac: 65 + getRandomInt(41),
         glupc: 68 + getRandomInt(81),
         description: faker.lorem.text(),

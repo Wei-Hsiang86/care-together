@@ -22,11 +22,11 @@
     <tr>
       <th scope="row"></th>
       <td>{{this.User.name}}</td>
-      <td>{{this.temperature}}</td>
-      <td>{{this.heartRate}}</td>
-      <td>{{this.bloodPressure}}</td>
-      <td>{{this.gluac}}</td>
-      <td>{{this.glupc}}</td>
+      <td {{#ifOut this.temperature 39 36}}class="text-danger"{{/ifOut}}>{{this.temperature}}</td>
+      <td {{#ifOut this.heartRate 100 60}}class="text-danger"{{/ifOut}}>{{this.heartRate}}</td>
+      <td {{#ifPresOut this.bloodPressure 120 90 80 60}}class="text-danger"{{/ifPresOut}}>{{this.bloodPressure}}</td>
+      <td {{#ifOut this.gluac 100 70}}class="text-danger"{{/ifOut}}>{{this.gluac}}</td>
+      <td {{#ifOut this.glupc 140 70}}class="text-danger"{{/ifOut}}>{{this.glupc}}</td>
       <td>
         <button type="button" class="btn btn-link">
           <a class="btn btn-link link-primary" href="/admin/patients/{{this.id}}">Detail</a>
