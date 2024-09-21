@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-12">
+    <h4><strong>Name: {{patient.User.name}}</strong></h4>
+    <h5 class="text-muted">Record time: {{inputTime patient.createdAt}}</h5>
+  </div>
+
+  <div class="col-md-4">
+    <div class="well">
+      <ul class="list-unstyled">
+        <li><strong>Temp:</strong> {{patient.temperature}}</li>
+        <li><strong>HR:</strong> {{patient.heartRate}}</li>
+        <li><strong>BP:</strong> {{patient.bloodPressure}}</li>
+        <li><strong>Glucose AC:</strong> {{patient.gluac}}</li>
+        <li><strong>Glucose PC:</strong> {{patient.glupc}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <p style="white-space: break-spaces;"><strong>Patient's description：</strong></p>
+    <p style="white-space: break-spaces;">{{patient.description}}</p>
+  </div>
+  
+  <hr>
+</div>
+
+<a class="btn btn-outline-secondary" href="/admin/patients">Back</a>

@@ -25,6 +25,13 @@ module.exports = {
       name: 'user2',
       created_at: new Date(),
       updated_at: new Date()
+    }, {
+      email: 'user3@example.com',
+      password: await bcrypt.hash('123456', 8),
+      is_admin: false,
+      name: 'user3',
+      created_at: new Date(),
+      updated_at: new Date()
     }], {})
   },
   down: async (queryInterface, Sequelize) => {

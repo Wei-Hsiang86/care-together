@@ -23,7 +23,7 @@ module.exports = {
         description: faker.lorem.text(),
         created_at: new Date(),
         updated_at: new Date(),
-        user_id: users[Math.floor(Math.random() * users.length)].id
+        user_id: users[Math.floor(Math.random() * (users.length - 1) + 1)].id
       }))
     )
   },

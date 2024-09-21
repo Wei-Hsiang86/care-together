@@ -3,6 +3,9 @@ const { Patient, User } = require('../models')
 const patientController = {
   getPatients: (req, res, next) => {
     Patient.findAll({
+      where: {
+        userId: req.user.id
+      },
       raw: true
     })
       .then(patients => {
@@ -87,7 +90,7 @@ const patientController = {
       })
       .catch(err => next(err))
   },
-  deleteRestaurant: (req, res, next) => {
+  deletePatient: (req, res, next) => {
     return Patient.findByPk(req.params.id)
       .then(patient => {
         if (!patient) throw new Error('查詢不到數據紀錄!')

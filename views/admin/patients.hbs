@@ -1,1 +1,44 @@
-<div>medical staff can see patients' data</div>
+<h1>Patients' Data</h1>
+
+<br />
+<br />
+
+<table class="table align-middle">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Temp (℃)</th>
+      <th scope="col">HR (bpm)</th>
+      <th scope="col">BP (mmHg)</th>
+      <th scope="col">Glucose AC (mg/dl)</th>
+      <th scope="col">Glucose PC (mg/dl)</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#each patients}}
+    <tr>
+      <th scope="row"></th>
+      <td>{{this.User.name}}</td>
+      <td>{{this.temperature}}</td>
+      <td>{{this.heartRate}}</td>
+      <td>{{this.bloodPressure}}</td>
+      <td>{{this.gluac}}</td>
+      <td>{{this.glupc}}</td>
+      <td>
+        <button type="button" class="btn btn-link">
+          <a class="btn btn-link link-primary" href="/admin/patients/{{this.id}}">Detail</a>
+        </button>
+        <button type="button" class="btn btn-link">
+          <a class="btn btn-link link-primary" href="/admin/patients/{{this.id}}/edit">Edit</a>
+        </button>
+        <form action="/admin/patients/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+          <button type="submit" class="btn btn-link link-danger" onclick="return confirm(`Delete confirm`)">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

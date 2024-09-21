@@ -25,11 +25,11 @@ router.get('/users/:id/edit', authenticated, userController.editUser)
 router.get('/users/:id', authenticated, userController.getUser)
 router.put('/users/:id', authenticated, upload.single('photo'), userController.putUser) // 注意 single 內參數名稱，要與 form 表單 name 屬性名稱一致
 
-router.get('/patients/create', patientController.createPatient)
-router.get('/patients/:id/edit', patientController.editPatient)
-router.get('/patients/:id', patientController.getPatient)
-router.put('/patients/:id', patientController.putPatient)
-router.delete('/patients/:id', patientController.deleteRestaurant)
+router.get('/patients/create', authenticated, patientController.createPatient)
+router.get('/patients/:id/edit', authenticated, patientController.editPatient)
+router.get('/patients/:id', authenticated, patientController.getPatient)
+router.put('/patients/:id', authenticated, patientController.putPatient)
+router.delete('/patients/:id', authenticated, patientController.deletePatient)
 router.get('/patients', authenticated, patientController.getPatients)
 router.post('/patients', authenticated, patientController.postPatient)
 

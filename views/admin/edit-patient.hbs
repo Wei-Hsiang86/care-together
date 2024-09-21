@@ -1,0 +1,11 @@
+<form action="/admin/patients/{{patient.id}}?_method=PUT" method="POST">
+  <div class="mb-4 text-center">
+    <h1 class="h3 font-weight-normal mb-3">Edit Patient's Data</h1>
+  </div>
+
+  {{> patient-form}}
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<a class="btn btn-outline-secondary" href="/admin/patients">Back</a>

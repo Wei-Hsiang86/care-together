@@ -7,7 +7,11 @@
   {{/if}}
 
     <div class="container-fluid">
+      {{#if user.isAdmin}}
+      <a class="navbar-brand" href="/admin/patients">做伙顧健康</a>
+      {{else}}
       <a class="navbar-brand" href="/">做伙顧健康</a>
+      {{/if}}
 
       {{#if user}}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"

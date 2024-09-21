@@ -30,7 +30,7 @@ const userController = {
   },
   signIn: (req, res) => {
     if (req.user.dataValues.isAdmin) {
-      req.flash('success_messages', '後臺登入！')
+      req.flash('success_messages', `歡迎您，${req.user.dataValues.name}!`)
       res.redirect('/admin/patients')
     } else {
       req.flash('success_messages', '成功登入！')
