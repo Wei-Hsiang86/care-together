@@ -7,11 +7,11 @@
   <div class="col-md-4">
     <div class="well">
       <ul class="list-unstyled">
-        <li><strong>Temp:</strong> {{patient.temperature}}</li>
-        <li><strong>HR:</strong> {{patient.heartRate}}</li>
-        <li><strong>BP:</strong> {{patient.bloodPressure}}</li>
-        <li><strong>Glucose AC:</strong> {{patient.gluac}}</li>
-        <li><strong>Glucose PC:</strong> {{patient.glupc}}</li>
+        <li {{#ifOut patient.temperature 39 36}}class="text-danger"{{/ifOut}}><strong>體溫:</strong> {{patient.temperature}}</li>
+        <li {{#ifOut patient.heartRate 100 60}}class="text-danger"{{/ifOut}}><strong>心跳:</strong> {{patient.heartRate}}</li>
+        <li {{#ifPresOut patient.bloodPressure 120 90 80 60}}class="text-danger"{{/ifPresOut}}><strong>血壓:</strong> {{patient.bloodPressure}}</li>
+        <li {{#ifOut patient.gluac 100 70}}class="text-danger"{{/ifOut}}><strong>飯前血糖:</strong> {{patient.gluac}}</li>
+        <li {{#ifOut patient.glupc 140 70}}class="text-danger"{{/ifOut}}><strong>飯後血糖:</strong> {{patient.glupc}}</li>
       </ul>
     </div>
   </div>

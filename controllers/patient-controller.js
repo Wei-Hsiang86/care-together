@@ -51,7 +51,8 @@ const patientController = {
     })
       .then(patient => {
         if (!patient) throw new Error('查詢不到數據紀錄!')
-        res.render('patient', { patient })
+        const name = req.user.name
+        res.render('patient', { patient, name })
       })
       .catch(err => next(err))
   },
