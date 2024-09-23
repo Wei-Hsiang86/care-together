@@ -1,0 +1,16 @@
+<h1>{{name}}的好友</h1>
+
+{{> patient-tabs route='friends'}}
+
+<form class="row" action="/search" method="GET">
+  <div class="col-auto">
+    <input class="form-control" type="text" placeholder="請輸入名稱" name="userName">
+  </div>
+  <div class="col-auto">
+    <button class="btn btn-success" type="submit">搜尋</button>
+  </div>
+</form>
+
+<br />
+
+{{> friend-cards}}

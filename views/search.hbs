@@ -1,0 +1,43 @@
+<h1>好友搜尋</h1>
+
+{{> patient-tabs route='friends'}}
+
+<form class="row" action="/search" method="GET">
+  <div class="col-auto">
+    <input class="form-control" type="text" placeholder="請輸入名稱" name="userName" value="{{keyword}}">
+  </div>
+  <div class="col-auto">
+    <button class="btn btn-success" type="submit">搜尋</button>
+  </div>
+</form>
+
+<br />
+
+<div class="d-flex justify-content-center">
+  {{#each searchedUser}}
+  <div class="card mb-3" style="width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        {{#if this.photo}}
+        <img src="{{this.photo}}" width="200px" height="200px" style="transition: opacity 0.5s; opacity:0;"
+          onload="this.style.opacity=1;" />
+        {{else}}
+        <img
+          src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhZof730mrjOz5V7uKnP6I7WHry7hAdRVFTuEvTIDTnty5Vjrm6JHqh5jfCJp7VRE4TubG8EDyYT-loxD9q3z1rtyLxNEo51yXcePHsM41xaf2Fp54Ibmj1NlxjVDZcoVS3a1jI0y22uo/s800/search_mushimegane.png"
+          width="200px" height="200px" style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
+        {{/if}}
+      </div>
+      <div class="col-md-8 d-flex align-items-center">
+        <div class="card-body text-center">
+          <h5 class="card-title"><strong>{{this.name}}</strong></h5>
+          <p class="card-text">{{this.intro}}</p>
+
+          <a class="btn btn-warning" href="/post">加為好友</a>
+          <a class="btn btn-outline-info" href="/users/{{this.id}}">更多資訊</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>

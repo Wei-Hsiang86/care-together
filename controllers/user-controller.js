@@ -61,7 +61,7 @@ const userController = {
   editUser: (req, res, next) => {
     if (req.user.id !== Number(req.params.id)) {
       req.flash('error_messages', '只能編輯自己的資料！')
-      res.redirect(`/users/${req.user.id}`)
+      return res.redirect(`/users/${req.user.id}`)
     }
 
     return User.findByPk(req.params.id)

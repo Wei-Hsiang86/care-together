@@ -12,28 +12,23 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date(),
       intro: 'Hello, I am root!'
-    }, {
-      email: 'user1@example.com',
-      password: await bcrypt.hash('123456', 8),
-      is_admin: false,
-      name: 'user1',
-      created_at: new Date(),
-      updated_at: new Date()
-    }, {
-      email: 'user2@example.com',
-      password: await bcrypt.hash('123456', 8),
-      is_admin: false,
-      name: 'user2',
-      created_at: new Date(),
-      updated_at: new Date()
-    }, {
-      email: 'user3@example.com',
-      password: await bcrypt.hash('123456', 8),
-      is_admin: false,
-      name: 'user3',
-      created_at: new Date(),
-      updated_at: new Date()
     }], {})
+
+    const users = Array.from({ length: 9 }, (_, i) => ({
+      email: `user${i + 1}@example.com`,
+      password: bcrypt.hash('123456', 8),
+      is_admin: false,
+      name: `user${i + 1}`,
+      created_at: new Date(),
+      updated_at: new Date()
+    }))
+
+    const hashedUsers = await Promise.all(users.map(async user => ({
+      ...user,
+      password: await user.password
+    })))
+
+    await queryInterface.bulkInsert('Users', hashedUsers, {})
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('Users', {})

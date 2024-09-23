@@ -5,8 +5,10 @@ const passport = require('../config/passport')
 
 const admin = require('./modules/admin')
 
-const userController = require('../controllers/user-controller')
+const friendController = require('../controllers/friend-controller')
 const patientController = require('../controllers/patient-controller')
+const searchController = require('../controllers/search-controller')
+const userController = require('../controllers/user-controller')
 
 const upload = require('../middleware/multer')
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
@@ -32,6 +34,10 @@ router.put('/patients/:id', authenticated, patientController.putPatient)
 router.delete('/patients/:id', authenticated, patientController.deletePatient)
 router.get('/patients', authenticated, patientController.getPatients)
 router.post('/patients', authenticated, patientController.postPatient)
+
+router.get('/friends', authenticated, friendController.getFriends)
+
+router.get('/search', authenticated, searchController.searchFriend)
 
 router.get('/', (req, res) => { res.redirect('/patients') })
 router.use('/', generalErrorHandler)

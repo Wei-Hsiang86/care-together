@@ -9,8 +9,6 @@ const adminController = {
     })
       .then(patients => {
         // console.log(patients)
-        const x = patients[0].bloodPressure.split('/')
-        console.log(x[0], x[1])
         res.render('admin/patients', { patients })
       })
 

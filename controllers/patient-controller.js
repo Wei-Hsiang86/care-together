@@ -10,7 +10,8 @@ const patientController = {
     })
       .then(patients => {
         // console.log(patients)
-        res.render('patients', { patients })
+        const name = req.user.name
+        res.render('patients', { patients, name })
       })
 
       .catch(err => next(err))
