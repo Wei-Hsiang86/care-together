@@ -31,8 +31,11 @@ passport.serializeUser((user, cb) => {
 passport.deserializeUser((id, cb) => {
   User.findByPk(id, {
     include: [
+      // 申請好友等待中
       { model: User, as: 'Applyings' },
+      // 被申請好友邀請思考中
       { model: User, as: 'Thinkings' },
+      // 已經成為好友
       { model: User, as: 'FriendsA' },
       { model: User, as: 'FriendsB' }
     ]

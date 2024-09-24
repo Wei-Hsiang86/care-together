@@ -1,6 +1,42 @@
 <div class="row mt-2">
-  
-  <div class="col-7">
+
+  {{#ifCond user.id userProfile.id}}
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">
+        <strong>申請中好友</strong>
+      </div>
+
+      <div class="card-body">
+        {{!-- {{#each userProfile}}
+        <a href="/users/{{this.User.id}}" class="text-decoration-none">
+          <img src={{this.User.image}} width="75" height="75" class="avatar"
+            style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
+        </a>
+        {{/each}} --}}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">
+        <strong>待確認好友</strong>
+      </div>
+
+      <div class="card-body">
+        {{!-- {{#each userProfile}}
+        <a href="/users/{{this.id}}" class="text-decoration-none">
+          <img src={{this.image}} width="75" height="75" class="avatar" style="transition: opacity 0.5s; opacity:0;"
+            onload="this.style.opacity=1;" />
+        </a>
+        {{/each}} --}}
+      </div>
+    </div>
+  </div>
+  {{/ifCond}}
+
+  <div class="col-12 mt-2">
     <div class="card">
       <div class="card-header">
         <strong>我的好友</strong>
@@ -8,29 +44,13 @@
 
       <div class="card-body">
         {{#each userProfile}}
-        {{!-- <a href="/users/{{this.User.id}}" class="text-decoration-none">
-          <img src={{this.User.image}} width="75" height="75" class="avatar"
-            style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
-        </a> --}}
-        {{/each}}
-      </div>
-    </div>
-  </div>  
-
-  <div class="col-5">
-    <div class="card">
-      <div class="card-header">
-        <strong>待確認好友</strong>
-      </div>
-
-      <div class="card-body">
-        {{#each userProfile}}
         {{!-- <a href="/users/{{this.id}}" class="text-decoration-none">
-          <img src={{this.image}} width="75" height="75" class="avatar"
-            style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
+          <img src={{this.image}} width="75" height="75" class="avatar" style="transition: opacity 0.5s; opacity:0;"
+            onload="this.style.opacity=1;" />
         </a> --}}
         {{/each}}
       </div>
     </div>
   </div>
+
 </div>
