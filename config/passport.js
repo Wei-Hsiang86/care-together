@@ -1,7 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const bcrypt = require('bcryptjs')
-const { User } = require('../models')
+const { User, Friendship } = require('../models')
 
 // 設置 passport 使用種類
 passport.use(new LocalStrategy(
@@ -36,8 +36,7 @@ passport.deserializeUser((id, cb) => {
       // 被申請好友邀請思考中
       { model: User, as: 'Thinkings' },
       // 已經成為好友
-      { model: User, as: 'FriendsA' },
-      { model: User, as: 'FriendsB' }
+      { model: Friendship, as: 'Friends' }
     ]
   })
     .then(user => {

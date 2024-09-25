@@ -36,9 +36,9 @@
 
           <div class="d-flex justify-content-center align-items-center">
 
-            {{#if isFriend}}
+            {{#if ../isFriend}}
             <form action="/friends/{{this.id}}?_method=DELETE" method="POST">
-              <button type="submit" class="btn btn-danger"> 刪除好友</button>
+              <button type="submit" class="btn btn-danger m-1" onclick="return confirm(`確定要刪除嗎？`)">刪除好友</button>
             </form>
             {{else}}
             <form action="/friends/{{this.id}}" method="POST">

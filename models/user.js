@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     */
     static associate (models) {
       User.hasMany(models.Patient, { foreignKey: 'userId' })
+      User.hasMany(models.Friendship, { foreignKey: 'uid', as: 'Friends' })
       User.belongsToMany(User, {
         through: models.Acquaintance,
         where: { situation: 'pending' },
@@ -22,18 +23,6 @@ module.exports = (sequelize, DataTypes) => {
         where: { situation: 'pending' },
         foreignKey: 'accepterId',
         as: 'Thinkings'
-      })
-      User.belongsToMany(User, {
-        through: models.Acquaintance,
-        where: { situation: 'approved' },
-        foreignKey: 'applierId',
-        as: 'FriendsA'
-      })
-      User.belongsToMany(User, {
-        through: models.Acquaintance,
-        where: { situation: 'approved' },
-        foreignKey: 'accepterId',
-        as: 'FriendsB'
       })
     }
   }

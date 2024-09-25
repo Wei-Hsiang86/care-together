@@ -1,5 +1,4 @@
-const { User, Acquaintance } = require('../models')
-const { Op } = require('sequelize')
+const { User, Acquaintance, Friendship } = require('../models')
 
 const friendController = {
   getFriends: (req, res, next) => {
@@ -26,13 +25,10 @@ const friendController = {
           applierId: req.user.id
         }
       }),
-      Acquaintance.findOne({
+      Friendship.findOne({
         where: {
-          situation: 'approved',
-          [Op.or]: [
-            { [Op.and]: [{ accepterId: req.user.id }, { applierId: friendId }] },
-            { [Op.and]: [{ accepterId: friendId }, { applierId: req.user.id }] }
-          ]
+          uid: req.user.id,
+          fid: friendId
         }
       })
     ])
@@ -51,8 +47,28 @@ const friendController = {
       .catch(err => next(err))
   },
   deleteFriend: (req, res, next) => {
-    console.log()
+    const { friendId } = req.params
+
+    return Promise.all([
+      Friendship.findOne({
+        where: {
+          uid: req.user.id,
+          fid: friendId
+        }
+      }),
+      Friendship.findOne({
+        where: {
+          uid: friendId,
+          fid: req.user.id
+        }
+      })
+    ])
+      .then(([friend, theOther]) => {
+        if (!friend) throw new Error('你們並非好友')
+        return Promise.all([friend.destroy(), theOther.destroy()])
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   }
 }
-
 module.exports = friendController
