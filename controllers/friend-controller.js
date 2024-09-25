@@ -61,11 +61,30 @@ const friendController = {
           uid: friendId,
           fid: req.user.id
         }
+      }),
+      Acquaintance.findOne({
+        where: {
+          situation: 'approved',
+          accepterId: req.user.id,
+          applierId: friendId
+        }
+      }),
+      Acquaintance.findOne({
+        where: {
+          situation: 'approved',
+          accepterId: friendId,
+          applierId: req.user.id
+        }
       })
     ])
-      .then(([friend, theOther]) => {
+      .then(([friend, theOther, acquaintance1, acquaintance2]) => {
         if (!friend) throw new Error('你們並非好友')
-        return Promise.all([friend.destroy(), theOther.destroy()])
+
+        return Promise.all([
+          friend.destroy(),
+          theOther.destroy(),
+          acquaintance1 === null ? acquaintance2.destroy() : acquaintance1.destroy()
+        ])
       })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
