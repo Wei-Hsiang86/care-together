@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
-const { User } = require('../models')
+const { User, Friendship } = require('../models')
+const { Op } = require('sequelize')
 const { localFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
@@ -43,18 +44,36 @@ const userController = {
     res.redirect('/signin')
   },
   getUser: (req, res, next) => {
-    return User.findByPk(req.params.id
-      /*, {
-      include: [
-        { model: Comment, include: Patient },
-        { model: Patient, as: 'blablabla' }
-      ]
-    } */
-    )
-      .then(user => {
+    const visitId = req.params.id
+    const uidSearch = req.user.id === visitId ? req.user.id : visitId // 判斷造訪個人頁面時，是否為當前登入者
+    const applyList = req.user.Applyings.map(id => { return { id: id.id, name: id.name, photo: id.photo } })
+    const thinkList = req.user.Thinkings.map(id => { return { id: id.id, name: id.name, photo: id.photo } })
+
+    return Friendship.findAll({
+      where: {
+        uid: uidSearch
+      },
+      raw: true
+    })
+      .then(ffData => {
+        const ffList = ffData.map(id => id.fid)
+
+        return Promise.all([
+          User.findByPk(uidSearch),
+          User.findAll({
+            where: {
+              id: {
+                [Op.in]: ffList
+              }
+            },
+            raw: true
+          })
+        ])
+      })
+      .then(([user, friendData]) => {
         if (!user) throw new Error('使用者不存在!')
         const userProfile = user.toJSON()
-        return res.render('users/profile', { userProfile })
+        return res.render('users/profile', { userProfile, friendData, applyList, thinkList })
       })
       .catch(err => next(err))
   },

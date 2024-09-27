@@ -18,6 +18,44 @@ module.exports = (sequelize, DataTypes) => {
     accepterId: DataTypes.INTEGER,
     applierId: DataTypes.INTEGER
   }, {
+    scopes: {
+      findApplyF (fid, nowUid) {
+        return {
+          where: {
+            situation: 'pending',
+            accepterId: fid,
+            applierId: nowUid
+          }
+        }
+      },
+      findThinkF (fid, nowUid) {
+        return {
+          where: {
+            situation: 'pending',
+            accepterId: nowUid,
+            applierId: fid
+          }
+        }
+      },
+      findApproveAp (fid, nowUid) {
+        return {
+          where: {
+            situation: 'approved',
+            accepterId: fid,
+            applierId: nowUid
+          }
+        }
+      },
+      findApproveAc (fid, nowUid) {
+        return {
+          where: {
+            situation: 'pending',
+            accepterId: nowUid,
+            applierId: fid
+          }
+        }
+      }
+    },
     sequelize,
     modelName: 'Acquaintance',
     tableName: 'Acquaintances',

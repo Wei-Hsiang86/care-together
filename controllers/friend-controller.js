@@ -1,36 +1,35 @@
 const { User, Acquaintance, Friendship } = require('../models')
+const { Op } = require('sequelize')
 
 const friendController = {
   getFriends: (req, res, next) => {
     // 給 /partials/friend-cards 的資料
     const userProfile = { id: req.user.id }
-    res.render('friends', { userProfile })
+    const friendList = req.user.Friends.map(id => id.fid)
+    const applyList = req.user.Applyings.map(id => { return { id: id.id, name: id.name, photo: id.photo } })
+    const thinkList = req.user.Thinkings.map(id => { return { id: id.id, name: id.name, photo: id.photo } })
+
+    User.findAll({
+      where: {
+        id: {
+          [Op.in]: friendList
+        }
+      },
+      raw: true
+    })
+      .then(friendData => {
+        return res.render('friends', { userProfile, friendData, applyList, thinkList })
+      })
+      .catch(err => next(err))
   },
   addFriend: (req, res, next) => {
     const { friendId } = req.params
     // console.log(friendId)
     return Promise.all([
       User.findByPk(friendId),
-      Acquaintance.findOne({
-        where: {
-          situation: 'pending',
-          accepterId: req.user.id,
-          applierId: friendId
-        }
-      }),
-      Acquaintance.findOne({
-        where: {
-          situation: 'pending',
-          accepterId: friendId,
-          applierId: req.user.id
-        }
-      }),
-      Friendship.findOne({
-        where: {
-          uid: req.user.id,
-          fid: friendId
-        }
-      })
+      Acquaintance.scope({ method: ['findThinkF', friendId, req.user.id] }).findOne(),
+      Acquaintance.scope({ method: ['findApplyF', friendId, req.user.id] }).findOne(),
+      Friendship.scope({ method: ['findMyF', friendId, req.user.id] }).findOne()
     ])
       .then(([user, accept, apply, friend]) => {
         if (!user) throw new Error('找不到此使用者')
@@ -50,43 +49,80 @@ const friendController = {
     const { friendId } = req.params
 
     return Promise.all([
-      Friendship.findOne({
-        where: {
-          uid: req.user.id,
-          fid: friendId
-        }
-      }),
-      Friendship.findOne({
-        where: {
-          uid: friendId,
-          fid: req.user.id
-        }
-      }),
-      Acquaintance.findOne({
-        where: {
-          situation: 'approved',
-          accepterId: req.user.id,
-          applierId: friendId
-        }
-      }),
-      Acquaintance.findOne({
-        where: {
-          situation: 'approved',
-          accepterId: friendId,
-          applierId: req.user.id
-        }
-      })
+      User.findByPk(friendId),
+      Acquaintance.scope({ method: ['findApproveAp', friendId, req.user.id] }).findOne(),
+      Acquaintance.scope({ method: ['findApproveAc', friendId, req.user.id] }).findOne(),
+      Friendship.scope({ method: ['findMyF', friendId, req.user.id] }).findOne(),
+      Friendship.scope({ method: ['listWithMe', friendId, req.user.id] }).findOne()
     ])
-      .then(([friend, theOther, acquaintance1, acquaintance2]) => {
-        if (!friend) throw new Error('你們並非好友')
+      .then(([user, approveAp, approveAc, myFriend, withMe]) => {
+        if (!user) throw new Error('找不到此使用者')
+        if (!myFriend) throw new Error('你們並非好友')
 
         return Promise.all([
-          friend.destroy(),
-          theOther.destroy(),
-          acquaintance1 === null ? acquaintance2.destroy() : acquaintance1.destroy()
+          approveAp === null ? approveAc.destroy() : approveAp.destroy(),
+          myFriend.destroy(),
+          withMe.destroy()
         ])
       })
       .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  cancelFriend: (req, res, next) => {
+    const { friendId } = req.params
+    return Promise.all([
+      User.findByPk(friendId),
+      Acquaintance.scope({ method: ['findApplyF', friendId, req.user.id] }).findOne()
+    ])
+      .then(([user, applyData]) => {
+        if (!user) throw new Error('找不到此使用者')
+        // console.log(applyData.toJSON())
+        return applyData.destroy()
+      })
+      .then(() => {
+        req.flash('success_messages', '已經取消好友邀請')
+        return res.redirect('back')
+      })
+      .catch(err => next(err))
+  },
+  refuseFriend: (req, res, next) => {
+    const { friendId } = req.params
+    return Promise.all([
+      User.findByPk(friendId),
+      Acquaintance.scope({ method: ['findThinkF', friendId, req.user.id] }).findOne()
+    ])
+      .then(([user, inviteData]) => {
+        if (!user) throw new Error('找不到此使用者')
+        return inviteData.destroy()
+      })
+      .then(() => {
+        req.flash('success_messages', '已經拒絕好友邀請')
+        return res.redirect('back')
+      })
+      .catch(err => next(err))
+  },
+  approveFriend: (req, res, next) => {
+    const { friendId } = req.params
+    return Promise.all([
+      User.findByPk(friendId),
+      Acquaintance.scope({ method: ['findThinkF', friendId, req.user.id] }).findOne()
+    ])
+      .then(([user, inviteData]) => {
+        if (!user) throw new Error('找不到此使用者')
+
+        return Promise.all([
+          inviteData.update({
+            situation: 'approved'
+          }),
+          Friendship.bulkCreate([
+            { uid: friendId, fid: req.user.id },
+            { uid: req.user.id, fid: friendId }
+          ])])
+      })
+      .then(() => {
+        req.flash('success_messages', '已成為好友')
+        return res.redirect('back')
+      })
       .catch(err => next(err))
   }
 }

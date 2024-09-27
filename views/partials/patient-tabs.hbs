@@ -8,4 +8,7 @@
   <li class="nav-item">
     <a class="nav-link {{#ifCond route 'friends'}}active{{/ifCond}}" href="/friends">好友</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'profile'}}active{{/ifCond}}" href="/users/{{user.id}}">個人資料</a>
+  </li>
 </ul>

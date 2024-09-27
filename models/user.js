@@ -13,16 +13,24 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Patient, { foreignKey: 'userId' })
       User.hasMany(models.Friendship, { foreignKey: 'uid', as: 'Friends' })
       User.belongsToMany(User, {
-        through: models.Acquaintance,
-        where: { situation: 'pending' },
-        foreignKey: 'applierId',
-        as: 'Applyings'
+        through: {
+          model: models.Acquaintance,
+          scope: {
+            situation: 'pending'
+          }
+        },
+        foreignKey: 'applierId', // 主體
+        as: 'Applyings' // 我申請好友中的名單
       })
       User.belongsToMany(User, {
-        through: models.Acquaintance,
-        where: { situation: 'pending' },
-        foreignKey: 'accepterId',
-        as: 'Thinkings'
+        through: {
+          model: models.Acquaintance,
+          scope: {
+            situation: 'pending'
+          }
+        },
+        foreignKey: 'accepterId', // 主體
+        as: 'Thinkings' // 我考慮是否接受好友的名單
       })
     }
   }

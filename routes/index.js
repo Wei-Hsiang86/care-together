@@ -35,7 +35,10 @@ router.delete('/patients/:id', authenticated, patientController.deletePatient)
 router.get('/patients', authenticated, patientController.getPatients)
 router.post('/patients', authenticated, patientController.postPatient)
 
+router.delete('/friends/applying/:friendId', authenticated, friendController.cancelFriend)
+router.delete('/friends/thinking/:friendId', authenticated, friendController.refuseFriend)
 router.post('/friends/:friendId', authenticated, friendController.addFriend)
+router.put('/friends/:friendId', authenticated, friendController.approveFriend)
 router.delete('/friends/:friendId', authenticated, friendController.deleteFriend)
 router.get('/friends', authenticated, friendController.getFriends)
 

@@ -1,6 +1,7 @@
 <div class="row mt-2">
 
   {{#ifCond user.id userProfile.id}}
+  {{!-- user applying list--}}
   <div class="col-6">
     <div class="card">
       <div class="card-header">
@@ -8,16 +9,54 @@
       </div>
 
       <div class="card-body">
-        {{!-- {{#each userProfile}}
-        <a href="/users/{{this.User.id}}" class="text-decoration-none">
-          <img src={{this.User.image}} width="75" height="75" class="avatar"
-            style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
-        </a>
-        {{/each}} --}}
+        {{!-- 卡片網格排列 --}}
+        <div class="row row-cols-1 row-cols-md-3 g-2">
+          {{#each applyList}}
+          <div class="col">
+            <div class="card">
+              <div class="row g-0 flex-nowrap">
+
+                <div class="col-md-4 ms-1 my-1 d-flex justify-content-center align-items-center">
+                  {{#if this.photo}}
+                  <a class="text-decoration-none" href="/users/{{this.id}}">
+                    <img src="{{this.photo}}" width="65" height="65" class="avatar"
+                      style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
+                  </a>
+                  {{else}}
+
+                  <a class="text-decoration-none" href="/users/{{this.id}}">
+                    <img
+                      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhZof730mrjOz5V7uKnP6I7WHry7hAdRVFTuEvTIDTnty5Vjrm6JHqh5jfCJp7VRE4TubG8EDyYT-loxD9q3z1rtyLxNEo51yXcePHsM41xaf2Fp54Ibmj1NlxjVDZcoVS3a1jI0y22uo/s800/search_mushimegane.png"
+                      width="65" height="65" class="avatar" style="transition: opacity 0.5s; opacity:0;"
+                      onload="this.style.opacity=1;" />
+                  </a>
+                  {{/if}}
+                </div>
+
+                <div class="col-md-8 d-flex align-items-center">
+                  <div class="card-body p-2 d-flex flex-column align-items-center justify-content-center ">
+                    <p class="card-title fs-5"><strong>{{this.name}}</strong></P>
+
+                    <div class="d-flex justify-content-center align-items-center">
+                      <form action="/friends/applying/{{this.id}}?_method=DELETE" method="POST">
+                        <button type="submit" class="btn text-warning bg-secondary btn-sm text-nowrap"
+                          onclick="return confirm(`要取消好友邀請嗎？`)">取消邀請</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
       </div>
     </div>
+
   </div>
 
+  {{!-- user thinking list--}}
   <div class="col-6">
     <div class="card">
       <div class="card-header">
@@ -25,17 +64,59 @@
       </div>
 
       <div class="card-body">
-        {{!-- {{#each userProfile}}
-        <a href="/users/{{this.id}}" class="text-decoration-none">
-          <img src={{this.image}} width="75" height="75" class="avatar" style="transition: opacity 0.5s; opacity:0;"
-            onload="this.style.opacity=1;" />
-        </a>
-        {{/each}} --}}
+        {{!-- 卡片網格排列 --}}
+        <div class="row row-cols-1 row-cols-md-3 g-2">
+          {{#each thinkList}}
+          <div class="col">
+            <div class="card">
+              <div class="row g-0 flex-nowrap">
+
+                <div class="col-md-4 ms-1 my-1 d-flex justify-content-center align-items-center">
+                  {{#if this.photo}}
+                  <a class="text-decoration-none" href="/users/{{this.id}}">
+                    <img src="{{this.photo}}" width="65" height="65" class="avatar"
+                      style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
+                  </a>
+                  {{else}}
+
+                  <a class="text-decoration-none" href="/users/{{this.id}}">
+                    <img
+                      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhZof730mrjOz5V7uKnP6I7WHry7hAdRVFTuEvTIDTnty5Vjrm6JHqh5jfCJp7VRE4TubG8EDyYT-loxD9q3z1rtyLxNEo51yXcePHsM41xaf2Fp54Ibmj1NlxjVDZcoVS3a1jI0y22uo/s800/search_mushimegane.png"
+                      width="65" height="65" class="avatar" style="transition: opacity 0.5s; opacity:0;"
+                      onload="this.style.opacity=1;" />
+                  </a>
+                  {{/if}}
+                </div>
+
+                <div class="col-md-8 d-flex align-items-center">
+                  <div class="card-body p-2 d-flex flex-column align-items-center justify-content-center ">
+                    <p class="card-title fs-5"><strong>{{this.name}}</strong></P>
+
+                    <div class="d-flex justify-content-center align-items-center">
+                      <form action="/friends/thinking/{{this.id}}?_method=DELETE" method="POST">
+                        <button type="submit" class="btn btn-danger btn-sm text-nowrap"
+                          onclick="return confirm(`要拒絕好友邀請嗎？`)">拒絕</button>
+                      </form>
+
+                      <form action="/friends/{{this.id}}?_method=PUT" method="POST">
+                        <button type="submit" class="btn btn-warning btn-sm ms-1 text-nowrap">接受</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
       </div>
     </div>
+
   </div>
   {{/ifCond}}
 
+  {{!-- user friends list--}}
   <div class="col-12 mt-2">
     <div class="card">
       <div class="card-header">
@@ -43,13 +124,52 @@
       </div>
 
       <div class="card-body">
-        {{#each userProfile}}
-        {{!-- <a href="/users/{{this.id}}" class="text-decoration-none">
-          <img src={{this.image}} width="75" height="75" class="avatar" style="transition: opacity 0.5s; opacity:0;"
-            onload="this.style.opacity=1;" />
-        </a> --}}
-        {{/each}}
+        {{!-- 卡片網格排列 --}}
+        <div class="row row-cols-2 row-cols-md-6 g-2">
+          {{#each friendData}}
+          <div class="col">
+            <div class="card">
+              <div class="row g-0 flex-nowrap">
+
+                <div class="col-md-4 ms-1 my-1 d-flex justify-content-center align-items-center">
+                  {{#if this.photo}}
+                  <a class="text-decoration-none" href="/users/{{this.id}}">
+                    <img src="{{this.photo}}" width="65" height="65" class="avatar"
+                      style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
+                  </a>
+                  {{else}}
+
+                  <a class="text-decoration-none" href="/users/{{this.id}}">
+                    <img
+                      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhZof730mrjOz5V7uKnP6I7WHry7hAdRVFTuEvTIDTnty5Vjrm6JHqh5jfCJp7VRE4TubG8EDyYT-loxD9q3z1rtyLxNEo51yXcePHsM41xaf2Fp54Ibmj1NlxjVDZcoVS3a1jI0y22uo/s800/search_mushimegane.png"
+                      width="65" height="65" class="avatar" style="transition: opacity 0.5s; opacity:0;"
+                      onload="this.style.opacity=1;" />
+                  </a>
+                  {{/if}}
+                </div>
+
+                <div class="col-md-8 d-flex align-items-center">
+                  <div class="card-body p-2 d-flex flex-column align-items-center justify-content-center">
+                    <p class="card-title fs-5"><strong>{{this.name}}</strong></P>
+
+                    {{#ifCond ../user.id ../userProfile.id}}
+                    <div class="d-flex justify-content-center align-items-center">
+                      <form action="/friends/{{this.id}}?_method=DELETE" method="POST">
+                        <button type="submit" class="btn btn-danger btn-sm text-nowrap"
+                          onclick="return confirm(`確定要刪除嗎？`)">刪除好友</button>
+                      </form>
+                    </div>
+                    {{/ifCond}}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
       </div>
+
     </div>
   </div>
 

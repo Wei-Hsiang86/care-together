@@ -2,7 +2,7 @@ const { Patient, User } = require('../models')
 
 const patientController = {
   getPatients: (req, res, next) => {
-    Patient.findAll({
+    return Patient.findAll({
       where: {
         userId: req.user.id
       },

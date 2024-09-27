@@ -17,6 +17,24 @@ module.exports = (sequelize, DataTypes) => {
     uid: DataTypes.INTEGER,
     fid: DataTypes.INTEGER
   }, {
+    scopes: {
+      findMyF (fid, nowUid) {
+        return {
+          where: {
+            uid: nowUid,
+            fid
+          }
+        }
+      },
+      listWithMe (fid, nowUid) {
+        return {
+          where: {
+            uid: fid,
+            fid: nowUid
+          }
+        }
+      }
+    },
     sequelize,
     modelName: 'Friendship',
     tableName: 'Friendships',
