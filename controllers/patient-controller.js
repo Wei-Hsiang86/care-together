@@ -6,10 +6,10 @@ const patientController = {
       where: {
         userId: req.user.id
       },
+      order: [['createdAt', 'DESC']],
       raw: true
     })
       .then(patients => {
-        // console.log(patients)
         const name = req.user.name
         res.render('patients', { patients, name })
       })
@@ -48,12 +48,16 @@ const patientController = {
   },
   getPatient: (req, res, next) => {
     Patient.findByPk(req.params.id, {
-      raw: true
+      include: {
+        model: User,
+        attributes: ['name']
+      },
+      raw: true,
+      nest: true
     })
       .then(patient => {
         if (!patient) throw new Error('查詢不到數據紀錄!')
-        const name = req.user.name
-        res.render('patient', { patient, name })
+        res.render('patient', { patient })
       })
       .catch(err => next(err))
   },

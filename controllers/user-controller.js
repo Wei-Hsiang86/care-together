@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { User, Friendship } = require('../models')
-const { Op } = require('sequelize')
+// const { Op } = require('sequelize')
 const { localFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
@@ -60,20 +60,13 @@ const userController = {
 
         return Promise.all([
           User.findByPk(uidSearch),
-          User.findAll({
-            where: {
-              id: {
-                [Op.in]: ffList
-              }
-            },
-            raw: true
-          })
+          User.scope({ method: ['findFriendInfo', ffList] }).findAll()
         ])
       })
-      .then(([user, friendData]) => {
+      .then(([user, friendInfo]) => {
         if (!user) throw new Error('使用者不存在!')
         const userProfile = user.toJSON()
-        return res.render('users/profile', { userProfile, friendData, applyList, thinkList })
+        return res.render('users/profile', { userProfile, friendInfo, applyList, thinkList })
       })
       .catch(err => next(err))
   },

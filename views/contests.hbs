@@ -1,18 +1,28 @@
-<h1>{{name}}的健康數據</h1>
+<h1>好友的近日狀況</h1>
 
-{{> patient-tabs route='patients'}}
+{{> patient-tabs route='contests'}}
 
-<a href='/patients/create'>
-  <button type="button" class="btn btn-primary">新增數據</button>
-</a>
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond '' categoryId}}active{{/ifCond}}" href="contests">總覽</a>
+  </li>
 
-<br />
-<br />
+  <li class="nav-item mx-1">
+    <a class="nav-link {{#ifCond this.id ../categoryId}}active{{/ifCond}}"
+      href="?categoryId={{this.id}}">血糖</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond this.id ../categoryId}}active{{/ifCond}}"
+      href="?categoryId={{this.id}}">血壓</a>
+  </li>
+</ul>
 
 <table class="table align-middle">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
+      <th scope="col">姓名</th>
       <th scope="col">體溫 (℃)</th>
       <th scope="col">心跳 (bpm)</th>
       <th scope="col">血壓 (mmHg)</th>
@@ -24,9 +34,10 @@
   </thead>
 
   <tbody>
-    {{#each patients}}
+    {{#each friendData}}
     <tr>
       <th scope="row"></th>
+      <td class="fw-bold">{{this.name}}</td>
       <td {{#ifOut this.temperature 39 36}}class="text-danger"{{/ifOut}}>{{this.temperature}}</td>
       <td {{#ifOut this.heartRate 100 60}}class="text-danger"{{/ifOut}}>{{this.heartRate}}</td>
       <td {{#ifPresOut this.bloodPressure 120 90 80 60}}class="text-danger"{{/ifPresOut}}>{{this.bloodPressure}}</td>
@@ -37,16 +48,12 @@
         <button type="button" class="btn btn-link">
           <a class="btn btn-link link-primary" href="/patients/{{this.id}}">詳細資訊</a>
         </button>
-
-        <button type="button" class="btn btn-link">
-          <a class="btn btn-link link-primary" href="/patients/{{this.id}}/edit">更新</a>
-        </button>
-        
-        <form action="/patients/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-          <button type="submit" class="btn btn-link link-danger" onclick="return confirm(`確定要刪除此筆資料嗎？`)">刪除</button>
-        </form>
       </td>
     </tr>
     {{/each}}
   </tbody>
 </table>
+
+{{#if noFriend}}
+<p class="text-warning fs-3 fw-bold">目前沒有好友</p>
+{{/if}}

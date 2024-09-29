@@ -1,5 +1,5 @@
 const { User, Acquaintance, Friendship } = require('../models')
-const { Op } = require('sequelize')
+// const { Op } = require('sequelize')
 
 const friendController = {
   getFriends: (req, res, next) => {
@@ -9,16 +9,9 @@ const friendController = {
     const applyList = req.user.Applyings.map(id => { return { id: id.id, name: id.name, photo: id.photo } })
     const thinkList = req.user.Thinkings.map(id => { return { id: id.id, name: id.name, photo: id.photo } })
 
-    User.findAll({
-      where: {
-        id: {
-          [Op.in]: friendList
-        }
-      },
-      raw: true
-    })
-      .then(friendData => {
-        return res.render('friends', { userProfile, friendData, applyList, thinkList })
+    User.scope({ method: ['findFriendInfo', friendList] }).findAll()
+      .then(friendInfo => {
+        return res.render('friends', { userProfile, friendInfo, applyList, thinkList })
       })
       .catch(err => next(err))
   },

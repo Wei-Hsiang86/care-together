@@ -7,10 +7,15 @@ dayjs.extend(timezone)
 
 module.exports = {
   currentYear: () => dayjs().year(),
-  inputTime: time => {
+  fullDateTime: time => {
     return dayjs(time)
       .tz('Asia/Taipei')
       .format('YYYY/MM/DD HH:mm:ss')
+  },
+  simpleDateTime: time => {
+    return dayjs(time)
+      .tz('Asia/Taipei')
+      .format('MM/DD HH:mm')
   },
   ifCond: function (a, b, options) {
     return a === b ? options.fn(this) : options.inverse(this)

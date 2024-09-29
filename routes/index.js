@@ -5,10 +5,11 @@ const passport = require('../config/passport')
 
 const admin = require('./modules/admin')
 
-const friendController = require('../controllers/friend-controller')
-const patientController = require('../controllers/patient-controller')
-const searchController = require('../controllers/search-controller')
 const userController = require('../controllers/user-controller')
+const patientController = require('../controllers/patient-controller')
+const friendController = require('../controllers/friend-controller')
+const searchController = require('../controllers/search-controller')
+const contestController = require('../controllers/contest-controller')
 
 const upload = require('../middleware/multer')
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
@@ -34,6 +35,8 @@ router.put('/patients/:id', authenticated, patientController.putPatient)
 router.delete('/patients/:id', authenticated, patientController.deletePatient)
 router.get('/patients', authenticated, patientController.getPatients)
 router.post('/patients', authenticated, patientController.postPatient)
+
+router.get('/contests', authenticated, contestController.getContests)
 
 router.delete('/friends/applying/:friendId', authenticated, friendController.cancelFriend)
 router.delete('/friends/thinking/:friendId', authenticated, friendController.refuseFriend)
