@@ -37,7 +37,7 @@
     {{#each friendData}}
     <tr>
       <th scope="row"></th>
-      <td class="fw-bold">{{this.name}}</td>
+      <td class="fw-bold">{{this.User.name}}</td>
       <td {{#ifOut this.temperature 39 36}}class="text-danger"{{/ifOut}}>{{this.temperature}}</td>
       <td {{#ifOut this.heartRate 100 60}}class="text-danger"{{/ifOut}}>{{this.heartRate}}</td>
       <td {{#ifPresOut this.bloodPressure 120 90 80 60}}class="text-danger"{{/ifPresOut}}>{{this.bloodPressure}}</td>

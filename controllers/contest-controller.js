@@ -4,33 +4,21 @@ const { Op } = require('sequelize')
 const contestController = {
   getContests: (req, res, next) => {
     const friendList = req.user.Friends.map(id => id.fid)
+    const listLen = friendList.length
+    const result = Array.from({ length: listLen }, (_, i) => `x${i}`)
+    const constestDatas = friendList.map(uid => Patient.scope({ method: ['contestData', uid] }).findAll())
+    let friendData = []
+    return Promise.all(constestDatas)
+      .then((result) => {
+        friendData = concat(result)
 
-    return Promise.all([
-      User.scope({ method: ['findFriendInfo', friendList] }).findAll(),
-      Patient.findAll({
-        where: {
-          userId: {
-            [Op.in]: friendList
-          }
-        },
-        attributes: ['id', 'temperature', 'heartRate', 'bloodPressure', 'gluac', 'glupc', 'updatedAt'],
-        limit: 2,
-        order: [['createdAt', 'DESC']],
-        raw: true
+        return User.scope({ method: ['findFriendInfo', friendList] }).findAll()
       })
-    ])
-      .then(([friendInfo, data]) => {
+      .then(friendInfo => {
         if (Array.isArray(friendInfo) && friendInfo.length === 0) {
           const noFriend = true
           return res.render('contests', { noFriend })
         }
-
-        const friendData = data.map(item => ({
-          ...item,
-          name: friendInfo[0].name,
-          email: friendInfo[0].email
-        }))
-        console.log(friendData)
         return res.render('contests', { friendData })
       })
       .catch(err => next(err))

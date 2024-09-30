@@ -1,4 +1,5 @@
 'use strict'
+const { User } = require('../models')
 const {
   Model
 } = require('sequelize')
@@ -21,6 +22,22 @@ module.exports = (sequelize, DataTypes) => {
     glupc: DataTypes.STRING,
     description: DataTypes.TEXT
   }, {
+    scopes: {
+      contestData (uid) {
+        return {
+          include: {
+            model: User,
+            attributes: ['id', 'name']
+          },
+          where: { userId: uid },
+          attributes: { exclude: ['description', 'createdAt'] },
+          order: [['createdAt', 'DESC']],
+          limit: 5,
+          raw: true,
+          nest: true
+        }
+      }
+    },
     sequelize,
     modelName: 'Patient',
     tableName: 'Patients',

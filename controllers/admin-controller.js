@@ -3,9 +3,17 @@ const { Patient, User } = require('../models')
 const adminController = {
   getPatients: (req, res, next) => {
     Patient.findAll({
+      include: {
+        model: User,
+        attributes: ['name']
+      },
+      order: [
+        // 先依照名字排，再依照時間排序
+        [User, 'id', 'ASC'],
+        ['createdAt', 'DESC']
+      ],
       raw: true,
-      nest: true,
-      include: [User]
+      nest: true
     })
       .then(patients => {
         // console.log(patients)
