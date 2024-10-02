@@ -8,7 +8,6 @@ const admin = require('./modules/admin')
 const userController = require('../controllers/user-controller')
 const patientController = require('../controllers/patient-controller')
 const friendController = require('../controllers/friend-controller')
-const searchController = require('../controllers/search-controller')
 const contestController = require('../controllers/contest-controller')
 
 const upload = require('../middleware/multer')
@@ -36,6 +35,7 @@ router.delete('/patients/:id', authenticated, patientController.deletePatient)
 router.get('/patients', authenticated, patientController.getPatients)
 router.post('/patients', authenticated, patientController.postPatient)
 
+router.get('/contests/search', authenticated, contestController.getContests)
 router.get('/contests', authenticated, contestController.getContests)
 
 router.delete('/friends/applying/:friendId', authenticated, friendController.cancelFriend)
@@ -43,9 +43,8 @@ router.delete('/friends/thinking/:friendId', authenticated, friendController.ref
 router.post('/friends/:friendId', authenticated, friendController.addFriend)
 router.put('/friends/:friendId', authenticated, friendController.approveFriend)
 router.delete('/friends/:friendId', authenticated, friendController.deleteFriend)
+router.get('/friends/search', authenticated, friendController.searchFriend)
 router.get('/friends', authenticated, friendController.getFriends)
-
-router.get('/search', authenticated, searchController.searchFriend)
 
 router.get('/', (req, res) => { res.redirect('/patients') })
 router.use('/', generalErrorHandler)
