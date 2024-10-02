@@ -35,7 +35,7 @@ router.delete('/patients/:id', authenticated, patientController.deletePatient)
 router.get('/patients', authenticated, patientController.getPatients)
 router.post('/patients', authenticated, patientController.postPatient)
 
-router.get('/contests/search', authenticated, contestController.getContests)
+router.get('/contests/search', authenticated, contestController.filterContests)
 router.get('/contests', authenticated, contestController.getContests)
 
 router.delete('/friends/applying/:friendId', authenticated, friendController.cancelFriend)

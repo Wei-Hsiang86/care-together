@@ -7,14 +7,17 @@
     <button type="button" class="btn btn-primary me-3">總覽</button>
   </a>
 
-  <form class="row" action="/search" method="GET">
-    <div class="col-8">
-      <input class="form-control" type="text" placeholder="輸入朋友的名字" name="contestFilter" list="myList">
+  <form class="row" action="/contests/search" method="GET">
+    <div class="col-6">
+      <input class="form-control" type="text" placeholder="請輸入朋友名字" name="contestFilter" list="myList" value="{{keyword}}">
       <datalist id="myList">
-        <option value="選項1">
-        <option value="選項2">
-        <option value="選項3">
+        {{#each friendInfo}}
+        <option value="{{this.name}}"></option>
+        {{/each}}
       </datalist>
+    </div>
+    <div class="col-4">
+      <input class="form-control" type="number" placeholder="查詢資料筆數" name="searchNum">
     </div>
     <div class="col-2 ps-1">
       <button class="btn btn-success text-nowrap" type="submit">搜尋</button>

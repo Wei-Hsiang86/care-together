@@ -24,7 +24,8 @@ const friendController = {
     const applyList = req.user.Applyings.map(id => id.id)
     const thinkList = req.user.Thinkings.map(id => id.id)
 
-    User.findAll({
+    // 因為後續可能會用關鍵字搜尋出所有相關的人，因此用 findAll()
+    return User.findAll({
       where: {
         name: keyword
       },
