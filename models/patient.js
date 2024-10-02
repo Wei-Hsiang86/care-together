@@ -30,6 +30,16 @@ module.exports = (sequelize, DataTypes) => {
           raw: true,
           nest: true
         }
+      },
+      patientData (model) {
+        return {
+          include: {
+            model: model,
+            attributes: ['name']
+          },
+          raw: true,
+          nest: true
+        }
       }
     },
     sequelize,

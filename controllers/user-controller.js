@@ -87,7 +87,10 @@ const userController = {
     const { name, intro } = req.body
     const { file } = req
     if (!name) throw new Error('姓名為必填欄位')
-    if (req.user.id !== Number(req.params.id)) throw new Error('只能更改自己的資料！')
+    if (req.user.id !== Number(req.params.id)) {
+      req.flash('error_messages', '只能更改自己的資料！')
+      return res.redirect(`/users/${req.user.id}`)
+    }
 
     return Promise.all([
       User.findByPk(req.params.id),

@@ -47,16 +47,17 @@ const patientController = {
       .catch(err => next(err))
   },
   getPatient: (req, res, next) => {
-    Patient.findByPk(req.params.id, {
-      include: {
-        model: User,
-        attributes: ['name']
-      },
-      raw: true,
-      nest: true
-    })
+    const viewRight = req.user.Friends.map(id => id.fid)
+    viewRight.push(req.user.id)
+
+    return Patient.scope({ method: ['patientData', User] }).findByPk(req.params.id)
       .then(patient => {
         if (!patient) throw new Error('查詢不到數據紀錄!')
+        if (!viewRight.includes(patient.userId)) {
+          req.flash('error_messages', '只能查看自己或是朋友的紀錄!')
+          return res.redirect('/patients')
+        }
+
         res.render('patient', { patient })
       })
       .catch(err => next(err))

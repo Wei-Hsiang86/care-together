@@ -2,21 +2,27 @@
 
 {{> patient-tabs route='contests'}}
 
-<ul class="nav nav-pills">
-  <li class="nav-item">
-    <a class="nav-link {{#ifCond '' categoryId}}active{{/ifCond}}" href="contests">總覽</a>
-  </li>
+<div class="d-flex nowrap">
+  <a href='/contests'>
+    <button type="button" class="btn btn-primary me-3">總覽</button>
+  </a>
 
-  <li class="nav-item mx-1">
-    <a class="nav-link {{#ifCond this.id ../categoryId}}active{{/ifCond}}"
-      href="?categoryId={{this.id}}">血糖</a>
-  </li>
+  <form class="row" action="/search" method="GET">
+    <div class="col-8">
+      <input class="form-control" type="text" placeholder="輸入朋友的名字" name="contestFilter" list="myList">
+      <datalist id="myList">
+        <option value="選項1">
+        <option value="選項2">
+        <option value="選項3">
+      </datalist>
+    </div>
+    <div class="col-2 ps-1">
+      <button class="btn btn-success text-nowrap" type="submit">搜尋</button>
+    </div>
+  </form>
+</div>
 
-  <li class="nav-item">
-    <a class="nav-link {{#ifCond this.id ../categoryId}}active{{/ifCond}}"
-      href="?categoryId={{this.id}}">血壓</a>
-  </li>
-</ul>
+<br />
 
 <table class="table align-middle">
   <thead class="thead-dark">
@@ -38,11 +44,11 @@
     <tr>
       <th scope="row">{{this.itemN}}</th>
       <td class="fw-bold">{{this.User.name}}</td>
-      <td {{#ifOut this.temperature 39 36}}class="text-danger"{{/ifOut}}>{{this.temperature}}</td>
-      <td {{#ifOut this.heartRate 100 60}}class="text-danger"{{/ifOut}}>{{this.heartRate}}</td>
-      <td {{#ifPresOut this.bloodPressure 120 90 80 60}}class="text-danger"{{/ifPresOut}}>{{this.bloodPressure}}</td>
-      <td {{#ifOut this.gluac 100 70}}class="text-danger"{{/ifOut}}>{{this.gluac}}</td>
-      <td {{#ifOut this.glupc 140 70}}class="text-danger"{{/ifOut}}>{{this.glupc}}</td>
+      <td {{#ifOut this.temperature 39 36}}class="text-danger" {{/ifOut}}>{{this.temperature}}</td>
+      <td {{#ifOut this.heartRate 100 60}}class="text-danger" {{/ifOut}}>{{this.heartRate}}</td>
+      <td {{#ifPresOut this.bloodPressure 120 90 80 60}}class="text-danger" {{/ifPresOut}}>{{this.bloodPressure}}</td>
+      <td {{#ifOut this.gluac 100 70}}class="text-danger" {{/ifOut}}>{{this.gluac}}</td>
+      <td {{#ifOut this.glupc 140 70}}class="text-danger" {{/ifOut}}>{{this.glupc}}</td>
       <td>{{simpleDateTime this.updatedAt}}</td>
       <td>
         <button type="button" class="btn btn-link">
