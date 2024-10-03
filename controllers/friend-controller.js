@@ -37,7 +37,7 @@ const friendController = {
         const applying = applyList.includes(searchedUser[0].id)
         const thinking = thinkList.includes(searchedUser[0].id)
 
-        return res.render('search', { searchedUser, keyword, isFriend, applying, thinking })
+        return res.render('search-friend', { searchedUser, keyword, isFriend, applying, thinking })
       })
 
       .catch(err => next(err))

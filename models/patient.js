@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       contestData (uid) {
         return {
           where: { userId: uid },
-          attributes: { exclude: ['description', 'createdAt'] },
+          attributes: { exclude: ['description'] },
           order: [['createdAt', 'DESC']],
           raw: true,
           nest: true

@@ -1,17 +1,35 @@
 const { Patient, User } = require('../models')
+const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 const patientController = {
   getPatients: (req, res, next) => {
-    return Patient.findAll({
+    const defaultLimit = 10
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || defaultLimit
+    const offset = getOffset(limit, page)
+    return Patient.findAndCountAll({
       where: {
         userId: req.user.id
       },
+      attributes: {
+        exclude: ['description']
+      },
       order: [['createdAt', 'DESC']],
+      limit,
+      offset,
       raw: true
     })
-      .then(patients => {
+      .then(rawPatientData => {
+        const patientData = rawPatientData.rows.map((item, index) => ({
+          ...item,
+          itemN: index + offset + 1
+        }))
         const name = req.user.name
-        res.render('patients', { patients, name })
+        res.render('patients', {
+          patients: patientData,
+          name,
+          pagination: getPagination(limit, page, rawPatientData.count)
+        })
       })
 
       .catch(err => next(err))

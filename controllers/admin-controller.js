@@ -7,32 +7,26 @@ const adminController = {
     const page = Number(req.query.page) || 1
     const limit = Number(req.query.limit) || defaultLimit
     const offset = getOffset(limit, page)
-    return Patient.findAndCountAll({
-      include: {
-        model: User,
-        attributes: ['name']
-      },
+    return Patient.scope({ method: ['patientData', User] }).findAndCountAll({
       attributes: {
         exclude: ['description']
       },
       order: [
-        // 先依照名字排，再依照時間排序
+      // 先依照名字排，再依照時間排序
         [User, 'id', 'ASC'],
         ['createdAt', 'DESC']
       ],
       limit,
-      offset,
-      raw: true,
-      nest: true
+      offset
     })
-      .then(rawData => {
-        const patientData = rawData.rows.map((item, index) => ({
+      .then(rawPatientData => {
+        const patientData = rawPatientData.rows.map((item, index) => ({
           ...item,
           itemN: index + offset + 1
         }))
         res.render('admin/patients', {
           patients: patientData,
-          pagination: getPagination(limit, page, rawData.count)
+          pagination: getPagination(limit, page, rawPatientData.count)
         })
       })
 
