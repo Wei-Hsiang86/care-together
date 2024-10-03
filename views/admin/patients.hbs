@@ -21,7 +21,7 @@
   <tbody>
     {{#each patients}}
     <tr>
-      <th scope="row"></th>
+      <th scope="row">{{this.itemN}}</th>
       <td>{{this.User.name}}</td>
       <td {{#ifOut this.temperature 39 36}}class="text-danger"{{/ifOut}}>{{this.temperature}}</td>
       <td {{#ifOut this.heartRate 100 60}}class="text-danger"{{/ifOut}}>{{this.heartRate}}</td>
@@ -29,14 +29,14 @@
       <td {{#ifOut this.gluac 100 70}}class="text-danger"{{/ifOut}}>{{this.gluac}}</td>
       <td {{#ifOut this.glupc 140 70}}class="text-danger"{{/ifOut}}>{{this.glupc}}</td>
       <td>{{simpleDateTime this.updatedAt}}</td>
-      <td>
+      <td class="d-flex flex-nowrap">
         <button type="button" class="btn btn-link">
           <a class="btn btn-link link-primary" href="/admin/patients/{{this.id}}">Detail</a>
         </button>
         <button type="button" class="btn btn-link">
           <a class="btn btn-link link-primary" href="/admin/patients/{{this.id}}/edit">Edit</a>
         </button>
-        <form action="/admin/patients/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+        <form action="/admin/patients/{{this.id}}?_method=DELETE" method="POST" class="align-self-center">
           <button type="submit" class="btn btn-link link-danger" onclick="return confirm(`Delete confirm`)">Delete</button>
         </form>
       </td>
@@ -44,3 +44,27 @@
     {{/each}}
   </tbody>
 </table>
+
+<nav class="mt-3" aria-label="page navigation">
+  <ul class="pagination justify-content-center">
+    <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
+      <a class="page-link" href="/admin/patients?page={{pagination.prev}}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {{#each pagination.pages}}
+      {{#ifCond this ../pagination.currentPage}}
+        <li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
+      {{else}}
+        <li class="page-item">
+          <a class="page-link" href="/admin/patients?page={{this}}">{{this}}</a>
+        </li>
+      {{/ifCond}}
+    {{/each}}
+    <li class="page-item {{#ifCond pagination.currentPage pagination.totalPage}}disabled{{/ifCond}}">
+      <a class="page-link" href="/admin/patients?page={{pagination.next}}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
