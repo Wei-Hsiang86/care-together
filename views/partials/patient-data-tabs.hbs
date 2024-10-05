@@ -1,0 +1,10 @@
+<ul class="nav nav-pills mt-1 mb-4">
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'comments'}}active{{/ifCond}}" href="/patients/{{id}}">朋友的留言</a>
+  </li>
+  {{#ifCond user.name patient.User.name}}
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'notes'}}active{{/ifCond}}" href="/notes/{{id}}">醫事人員提醒</a>
+  </li>
+  {{/ifCond}}
+</ul>

@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate (models) {
       Patient.belongsTo(models.User, { foreignKey: 'userId' })
-      Patient.hasMany(models.comment, { foreignKey: 'patientId' })
+      Patient.hasMany(models.Comment, { foreignKey: 'patientId' })
     }
   }
   Patient.init({
@@ -28,16 +28,6 @@ module.exports = (sequelize, DataTypes) => {
           where: { userId: uid },
           attributes: { exclude: ['description'] },
           order: [['createdAt', 'DESC']],
-          raw: true,
-          nest: true
-        }
-      },
-      patientData (model) {
-        return {
-          include: {
-            model: model,
-            attributes: ['name']
-          },
           raw: true,
           nest: true
         }

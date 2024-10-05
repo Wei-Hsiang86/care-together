@@ -1,4 +1,4 @@
-const { Patient, User } = require('../models')
+const { Patient, User, Comment } = require('../models')
 const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 const patientController = {
@@ -68,14 +68,20 @@ const patientController = {
     const viewRight = req.user.Friends.map(id => id.fid)
     viewRight.push(req.user.id)
 
-    return Patient.scope({ method: ['patientData', User] }).findByPk(req.params.id)
-      .then(patient => {
-        if (!patient) throw new Error('查詢不到數據紀錄!')
+    return Patient.findByPk(req.params.id, {
+      include: [
+        { model: User, attributes: ['name'] },
+        { model: Comment, include: User }
+      ]
+    })
+      .then(rawPatientData => {
+        if (!rawPatientData) throw new Error('查詢不到數據紀錄!')
+
+        const patient = rawPatientData.toJSON()
         if (!viewRight.includes(patient.userId)) {
           req.flash('error_messages', '只能查看自己或是朋友的紀錄!')
           return res.redirect('/patients')
         }
-
         res.render('patient', { patient })
       })
       .catch(err => next(err))

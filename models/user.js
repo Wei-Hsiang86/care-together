@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       // 暫時讓 User 跟 Friendship 設定成一對多，而非多對多
       // 因為對 fid 查 uid 這個關係目前而言是沒有意義的
       User.hasMany(models.Friendship, { foreignKey: 'uid', as: 'Friends' })
-      User.hasMany(models.comment, { foreignKey: 'userId' })
+      User.hasMany(models.Comment, { foreignKey: 'userId' })
       User.belongsToMany(User, {
         through: {
           model: models.Acquaintance,

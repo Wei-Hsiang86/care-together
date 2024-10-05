@@ -1,12 +1,15 @@
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 const timezone = require('dayjs/plugin/timezone')
+const relativeTime = require('dayjs/plugin/relativeTime')
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
+dayjs.extend(relativeTime)
 
 module.exports = {
   currentYear: () => dayjs().year(),
+  relativeTimeFromNow: a => dayjs(a).fromNow(),
   fullDateTime: time => {
     return dayjs(time)
       .tz('Asia/Taipei')

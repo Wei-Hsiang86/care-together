@@ -7,7 +7,10 @@ const adminController = {
     const page = Number(req.query.page) || 1
     const limit = Number(req.query.limit) || defaultLimit
     const offset = getOffset(limit, page)
-    return Patient.scope({ method: ['patientData', User] }).findAndCountAll({
+    return Patient.findAndCountAll({
+      include: [
+        { model: User, attributes: ['name'] }
+      ],
       attributes: {
         exclude: ['description']
       },
@@ -17,7 +20,9 @@ const adminController = {
         ['createdAt', 'DESC']
       ],
       limit,
-      offset
+      offset,
+      raw: true,
+      nest: true
     })
       .then(rawPatientData => {
         const patientData = rawPatientData.rows.map((item, index) => ({
