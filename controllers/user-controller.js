@@ -46,8 +46,8 @@ const userController = {
   getUser: (req, res, next) => {
     const visitId = req.params.id
     const uidSearch = req.user.id === visitId ? req.user.id : visitId // 判斷造訪個人頁面時，是否為當前登入者
-    const applyList = req.user.Applyings.map(id => { return { id: id.id, name: id.name, photo: id.photo } })
-    const thinkList = req.user.Thinkings.map(id => { return { id: id.id, name: id.name, photo: id.photo } })
+    const applyList = req.user.Applyings.map(id => { return { id: id.id, name: id.name, isAdmin: id.isAdmin, photo: id.photo } })
+    const thinkList = req.user.Thinkings.map(id => { return { id: id.id, name: id.name, isAdmin: id.isAdmin, photo: id.photo } })
 
     return Friendship.findAll({
       where: {

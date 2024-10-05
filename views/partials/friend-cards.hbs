@@ -13,7 +13,7 @@
         <div class="row row-cols-1 row-cols-md-3 g-2">
           {{#each applyList}}
           <div class="col">
-            <div class="card">
+            <div class="card {{#if this.isAdmin}}border-success border-3{{/if}}">
               <div class="row g-0 flex-nowrap">
 
                 <div class="col-md-4 ms-1 my-1 d-flex justify-content-center align-items-center">
@@ -68,7 +68,7 @@
         <div class="row row-cols-1 row-cols-md-3 g-2">
           {{#each thinkList}}
           <div class="col">
-            <div class="card">
+            <div class="card {{#if this.isAdmin}}border-success border-3{{/if}}">
               <div class="row g-0 flex-nowrap">
 
                 <div class="col-md-4 ms-1 my-1 d-flex justify-content-center align-items-center">
@@ -128,7 +128,7 @@
         <div class="row row-cols-2 row-cols-md-6 g-2">
           {{#each friendInfo}}
           <div class="col">
-            <div class="card">
+            <div class="card {{#if this.isAdmin}}border-success border-3{{/if}}">
               <div class="row g-0 flex-nowrap">
 
                 <div class="col-md-4 ms-1 my-1 d-flex justify-content-center align-items-center">

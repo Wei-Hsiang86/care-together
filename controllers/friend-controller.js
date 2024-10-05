@@ -6,8 +6,8 @@ const friendController = {
     // 給 /partials/friend-cards 的資料
     const userProfile = { id: req.user.id }
     const friendList = req.user.Friends.map(id => id.fid)
-    const applyList = req.user.Applyings.map(id => { return { id: id.id, name: id.name, photo: id.photo } })
-    const thinkList = req.user.Thinkings.map(id => { return { id: id.id, name: id.name, photo: id.photo } })
+    const applyList = req.user.Applyings.map(id => { return { id: id.id, name: id.name, isAdmin: id.isAdmin, photo: id.photo } })
+    const thinkList = req.user.Thinkings.map(id => { return { id: id.id, name: id.name, isAdmin: id.isAdmin, photo: id.photo } })
 
     User.scope({ method: ['findFriendInfo', friendList] }).findAll()
       .then(friendInfo => {
