@@ -23,6 +23,9 @@ module.exports = {
   ifCond: function (a, b, options) {
     return a === b ? options.fn(this) : options.inverse(this)
   },
+  orCond: function (a, b, c, options) {
+    return a || (b === c) ? options.fn(this) : options.inverse(this)
+  },
   ifOut: function (a, b, c, options) {
     return ((a > b) || (a < c)) ? options.fn(this) : options.inverse(this)
   },

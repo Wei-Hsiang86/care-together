@@ -78,7 +78,7 @@ const patientController = {
         if (!rawPatientData) throw new Error('查詢不到數據紀錄!')
 
         const patient = rawPatientData.toJSON()
-        if (!viewRight.includes(patient.userId)) {
+        if (!viewRight.includes(patient.userId) && !req.user.isAdmin) {
           req.flash('error_messages', '只能查看自己或是朋友的紀錄!')
           return res.redirect('/patients')
         }

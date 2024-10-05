@@ -47,6 +47,7 @@ router.delete('/friends/:friendId', authenticated, friendController.deleteFriend
 router.get('/friends/search', authenticated, friendController.searchFriend)
 router.get('/friends', authenticated, friendController.getFriends)
 
+router.delete('/comments/:id', authenticated, commentController.deleteComment)
 router.post('/comments', authenticated, commentController.postComment)
 
 router.get('/', (req, res) => { res.redirect('/patients') })

@@ -34,6 +34,11 @@
 {{!-- 評論 --}}
 <h4 class="mb-3 fw-bold">所有評論：</h4>
 {{#each patient.Comments}}
+  {{#orCond ../user.isAdmin ../user.id this.User.id}}
+    <form action="/comments/{{this.id}}?_method=DELETE" method="POST" class="float-end">
+      <button type="submit" class="btn btn-danger" onclick="return confirm(`確定要刪除此筆資料嗎？`)">刪除</button>
+    </form>
+  {{/orCond}}
   <blockquote class="blockquote mb-0">
     <h4><a href="/users/{{this.User.id}}">{{this.User.name}}</a></h4>
     <p>{{this.text}}</p>
