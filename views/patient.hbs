@@ -1,33 +1,4 @@
-<div class="row">
-  <div class="d-flex col-md-12">
-    <div class="col-10">
-      <h4><strong>姓名: {{patient.User.name}}</strong></h4>
-      <h5 class="text-muted">紀錄時間: {{fullDateTime patient.updatedAt}}</h5>
-    </div>
-    <div class="col-2 d-flex justify-content-end align-items-center">
-      <a class="btn btn-outline-secondary me-2" href="javascript:history.back()">返回</a>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="well">
-      <ul class="list-unstyled">
-        <li {{#ifOut patient.temperature 39 36}}class="text-danger" {{/ifOut}}><strong>體溫:</strong> {{patient.temperature}}</li>
-        <li {{#ifOut patient.heartRate 100 60}}class="text-danger" {{/ifOut}}><strong>心跳:</strong> {{patient.heartRate}}</li>
-        <li {{#ifPresOut patient.bloodPressure 120 90 80 60}}class="text-danger" {{/ifPresOut}}><strong>血壓:</strong> {{patient.bloodPressure}}</li>
-        <li {{#ifOut patient.gluac 100 70}}class="text-danger" {{/ifOut}}><strong>飯前血糖:</strong> {{patient.gluac}}</li>
-        <li {{#ifOut patient.glupc 140 70}}class="text-danger" {{/ifOut}}><strong>飯後血糖:</strong> {{patient.glupc}}</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="col-md-8">
-    <p style="white-space: break-spaces;"><strong>個人描述：</strong></p>
-    <p style="white-space: break-spaces;">{{patient.description}}</p>
-  </div>
-
-  <hr>
-</div>
+{{> patient-data}}
 
 {{> patient-data-tabs route='comments'}}
 

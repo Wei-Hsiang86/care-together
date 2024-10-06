@@ -79,7 +79,7 @@ const patientController = {
 
         const patient = rawPatientData.toJSON()
         if (!viewRight.includes(patient.userId) && !req.user.isAdmin) {
-          req.flash('error_messages', '只能查看自己或是朋友的紀錄!')
+          req.flash('error_messages', '只能查看自己或是朋友的健康紀錄!')
           return res.redirect('/patients')
         }
         res.render('patient', { patient })

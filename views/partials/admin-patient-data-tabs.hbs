@@ -1,0 +1,17 @@
+<ul class="nav nav-pills mt-1 mb-4">
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'notes'}}active{{/ifCond}}" href="/admin/patients/{{patient.id}}">NOTES</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'allData'}}active{{/ifCond}}" href="/admin/users/{{user.id}}/data">ALL DATA</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'medRecords'}}active{{/ifCond}}" href="/admin/users/{{user.id}}/medRecords">MEDICAL RECORDS</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="/patients/{{patient.id}}">PATIENT'S SOCIAL</a>
+  </li>
+</ul>

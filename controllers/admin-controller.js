@@ -1,4 +1,4 @@
-const { Patient, User } = require('../models')
+const { Patient, User, Note } = require('../models')
 const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 const adminController = {
@@ -38,13 +38,16 @@ const adminController = {
       .catch(err => next(err))
   },
   getPatient: (req, res, next) => {
-    Patient.findByPk(req.params.id, {
-      raw: true,
-      nest: true,
-      include: [User]
+    return Patient.findByPk(req.params.id, {
+      include: [
+        { model: User, attributes: ['name'] },
+        { model: Note, include: User }
+      ]
     })
-      .then(patient => {
-        if (!patient) throw new Error('查詢不到數據紀錄!')
+      .then(rawPatientData => {
+        if (!rawPatientData) throw new Error('查詢不到數據紀錄!')
+
+        const patient = rawPatientData.toJSON()
         res.render('admin/patient', { patient })
       })
       .catch(err => next(err))

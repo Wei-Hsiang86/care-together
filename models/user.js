@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       // 因為對 fid 查 uid 這個關係目前而言是沒有意義的
       User.hasMany(models.Friendship, { foreignKey: 'uid', as: 'Friends' })
       User.hasMany(models.Comment, { foreignKey: 'userId' })
+      User.hasMany(models.Note, { foreignKey: 'userId' })
       User.belongsToMany(User, {
         through: {
           model: models.Acquaintance,

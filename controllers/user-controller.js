@@ -44,7 +44,7 @@ const userController = {
     res.redirect('/signin')
   },
   getUser: (req, res, next) => {
-    const visitId = req.params.id
+    const visitId = req.params.userId
     const uidSearch = req.user.id === visitId ? req.user.id : visitId // 判斷造訪個人頁面時，是否為當前登入者
     const applyList = req.user.Applyings.map(id => { return { id: id.id, name: id.name, isAdmin: id.isAdmin, photo: id.photo } })
     const thinkList = req.user.Thinkings.map(id => { return { id: id.id, name: id.name, isAdmin: id.isAdmin, photo: id.photo } })
@@ -71,12 +71,12 @@ const userController = {
       .catch(err => next(err))
   },
   editUser: (req, res, next) => {
-    if (req.user.id !== Number(req.params.id)) {
+    if (req.user.id !== Number(req.params.userId)) {
       req.flash('error_messages', '只能編輯自己的資料！')
       return res.redirect(`/users/${req.user.id}`)
     }
 
-    return User.findByPk(req.params.id)
+    return User.findByPk(req.params.userId)
       .then(user => {
         if (!user) throw new Error('使用者不存在!')
         return res.render('users/edit', { user: user.toJSON() })
@@ -87,13 +87,13 @@ const userController = {
     const { name, intro } = req.body
     const { file } = req
     if (!name) throw new Error('姓名為必填欄位')
-    if (req.user.id !== Number(req.params.id)) {
+    if (req.user.id !== Number(req.params.userId)) {
       req.flash('error_messages', '只能更改自己的資料！')
       return res.redirect(`/users/${req.user.id}`)
     }
 
     return Promise.all([
-      User.findByPk(req.params.id),
+      User.findByPk(req.params.userId),
       localFileHandler(file)
     ])
       .then(([user, filePath]) => {
@@ -107,7 +107,7 @@ const userController = {
       })
       .then(() => {
         req.flash('success_messages', '使用者資料編輯成功')
-        res.redirect(`/users/${req.params.id}`)
+        res.redirect(`/users/${req.params.userId}`)
       })
       .catch(err => next(err))
   }
