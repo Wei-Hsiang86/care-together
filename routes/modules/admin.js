@@ -13,6 +13,8 @@ router.get('/patients', adminController.getPatients)
 router.delete('/notes/:id', noteController.deleteNote)
 router.post('/notes', noteController.postNote)
 
+router.get('/users/:userId/allData', adminController.getAllData)
+
 router.get('/', (req, res) => res.redirect('/admin/patients'))
 
 module.exports = router

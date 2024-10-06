@@ -1,6 +1,14 @@
 {{> admin-patient-data}}
 
-{{> admin-patient-data-tabs route='notes'}}
+<ul class="nav nav-pills mt-1 mb-4">
+  <li class="nav-item">
+    <a class="nav-link active" href="/admin/patients/{{tab.dataId}}">NOTES</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="/patients/{{tab.dataId}}">PATIENT'S SOCIAL</a>
+  </li>
+</ul>
 
 {{#each patient.Notes}}
   <form action="/admin/notes/{{this.id}}?_method=DELETE" method="POST" class="float-end">

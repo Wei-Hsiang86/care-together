@@ -5,6 +5,10 @@
       <h5 class="text-muted">Record time: {{fullDateTime patient.createdAt}}</h5>
     </div>
     <div class="col-2 d-flex justify-content-end align-items-center">
+      <form action="/admin/patients/{{patient.id}}?_method=DELETE" method="POST" class="align-self-center">
+        <button type="submit" class="btn btn-outline-danger text-nowrap me-2" onclick="return confirm('Confirm the deletion？')">Delete</button>
+      </form>
+      <a class="btn btn-outline-warning me-2" href="/admin/patients/{{patient.id}}/edit">Edit</a>
       <a class="btn btn-outline-secondary me-2" href="javascript:history.back()">Back</a>
     </div>
   </div>

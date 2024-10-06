@@ -25,6 +25,7 @@ const adminController = {
       nest: true
     })
       .then(rawPatientData => {
+        if (!rawPatientData) throw new Error('There is not any data!')
         const patientData = rawPatientData.rows.map((item, index) => ({
           ...item,
           itemN: index + offset + 1
@@ -46,9 +47,9 @@ const adminController = {
     })
       .then(rawPatientData => {
         if (!rawPatientData) throw new Error('Cannot find patient data!')
-
         const patient = rawPatientData.toJSON()
-        res.render('admin/patient', { patient })
+        const tab = { dataId: patient.id, userId: patient.userId }
+        res.render('admin/patient', { patient, tab })
       })
       .catch(err => next(err))
   },
@@ -95,6 +96,42 @@ const adminController = {
       })
       .then(() => res.redirect('/admin/patients'))
       .catch(err => next(err))
+  },
+  getAllData: (req, res, next) => {
+    const searchId = req.params.userId
+    const defaultLimit = 5
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || defaultLimit
+    const offset = getOffset(limit, page)
+
+    return Promise.all([
+      User.findByPk(searchId),
+      Patient.findAndCountAll({
+        where: {
+          userId: searchId
+        },
+        order: [['createdAt', 'DESC']],
+        limit,
+        offset,
+        raw: true
+      })
+    ])
+      .then(([user, rawPatientData]) => {
+        if (!user) throw new Error('User does not exist!')
+        if (!rawPatientData) throw new Error('There is not any data!')
+        const userProfile = user.toJSON()
+        const tab = { userId: searchId }
+        const patientData = rawPatientData.rows.map((item, index) => ({
+          ...item,
+          itemN: index + offset + 1
+        }))
+        res.render('admin/all-data', {
+          userProfile,
+          patient: patientData,
+          pagination: getPagination(limit, page, rawPatientData.count),
+          tab
+        })
+      })
   }
 }
 module.exports = adminController

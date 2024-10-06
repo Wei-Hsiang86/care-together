@@ -1,6 +1,35 @@
-<h1>Patients' Data</h1>
+{{!-- {{> admin-patient-data}} --}}
 
-{{> admin-patient-tabs route='patientsData'}}
+<div class="container d-none d-md-block">
+  <div class="card {{#if userProfile.isAdmin}}border-success border-3{{/if}} my-3">
+    <div class="row g-1">
+      <div class="col-md-4">
+        {{#if userProfile.photo}}
+        <img src="{{userProfile.photo}}" width="300px" height="300px" style="transition: opacity 0.5s; opacity:0;"
+          onload="this.style.opacity=1;" />
+        {{else}}
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhZof730mrjOz5V7uKnP6I7WHry7hAdRVFTuEvTIDTnty5Vjrm6JHqh5jfCJp7VRE4TubG8EDyYT-loxD9q3z1rtyLxNEo51yXcePHsM41xaf2Fp54Ibmj1NlxjVDZcoVS3a1jI0y22uo/s800/search_mushimegane.png" width="300px" height="300px" style="transition: opacity 0.5s; opacity:0;"
+          onload="this.style.opacity=1;" />
+        {{/if}}
+      </div>
+
+      <div class="col-md-8 d-flex justify-content-end">
+        <div class="card-body">
+          <h5 class="card-title"><i class="fa-regular fa-circle-user"></i> <strong>姓名：{{userProfile.name}}</strong></h5>
+          <p class="card-text"><i class="fa-solid fa-at fa-lg"></i> <strong>信箱：{{userProfile.email}}</strong></p>
+          <p class="card-text"><i class="fa-regular fa-address-book fa-lg"></i> <strong>自我介紹：</strong></p>
+          <p class="card-text">{{userProfile.intro}}</p>
+        </div>
+        
+        <div class="align-self-end m-3">
+          <a class="btn btn-outline-secondary" href="javascript:history.back()">返回</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{> admin-user-data-tabs route='allData'}}
 
 <table class="table align-middle">
   <thead class="thead-dark">
@@ -18,7 +47,7 @@
   </thead>
 
   <tbody>
-    {{#each patients}}
+    {{#each patient}}
     <tr>
       <th scope="row">{{this.itemN}}</th>
       <td>{{this.User.name}}</td>
@@ -47,7 +76,7 @@
 <nav class="mt-3" aria-label="page navigation">
   <ul class="pagination justify-content-center">
     <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
-      <a class="page-link" href="/admin/patients?page={{pagination.prev}}" aria-label="Previous">
+      <a class="page-link" href="/admin/users/{{tab.userId}}/allData?page={{pagination.prev}}" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
@@ -56,12 +85,12 @@
         <li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
       {{else}}
         <li class="page-item">
-          <a class="page-link" href="/admin/patients?page={{this}}">{{this}}</a>
+          <a class="page-link" href="/admin/users/{{../tab.userId}}/allData?page={{this}}">{{this}}</a>
         </li>
       {{/ifCond}}
     {{/each}}
     <li class="page-item {{#ifCond pagination.currentPage pagination.totalPage}}disabled{{/ifCond}}">
-      <a class="page-link" href="/admin/patients?page={{pagination.next}}" aria-label="Next">
+      <a class="page-link" href="/admin/users/{{tab.userId}}/allData?page={{pagination.next}}" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

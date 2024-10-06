@@ -2,7 +2,7 @@
 
 {{!-- profile --}}
 <div class="container d-none d-md-block">
-  <div class="card my-3">
+  <div class="card {{#if userProfile.isAdmin}}border-success border-3{{/if}} my-3">
     <div class="row g-1">
       <div class="col-md-4">
         {{#if userProfile.photo}}
