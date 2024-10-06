@@ -45,7 +45,7 @@ const adminController = {
       ]
     })
       .then(rawPatientData => {
-        if (!rawPatientData) throw new Error('查詢不到數據紀錄!')
+        if (!rawPatientData) throw new Error('Cannot find patient data!')
 
         const patient = rawPatientData.toJSON()
         res.render('admin/patient', { patient })
@@ -57,20 +57,20 @@ const adminController = {
       raw: true
     })
       .then(patient => {
-        if (!patient) throw new Error('查詢不到數據紀錄!')
+        if (!patient) throw new Error('Cannot find patient data!')
         res.render('admin/edit-patient', { patient })
       })
       .catch(err => next(err))
   },
   putPatient: (req, res, next) => {
     const { temperature, heartRate, bloodPressure, gluac, glupc, description } = req.body
-    if (!temperature) throw new Error('必須填寫體溫')
-    if (!heartRate) throw new Error('必須填寫心跳')
-    if (!bloodPressure) throw new Error('必須填寫血壓')
+    if (!temperature) throw new Error('Require temperature!')
+    if (!heartRate) throw new Error('Require heart rate!')
+    if (!bloodPressure) throw new Error('Require blood pressure!')
 
     Patient.findByPk(req.params.id)
       .then(patient => {
-        if (!patient) throw new Error('查詢不到數據紀錄!')
+        if (!patient) throw new Error('Cannot find patient data!')
 
         return patient.update({
           temperature,
@@ -82,7 +82,7 @@ const adminController = {
         })
       })
       .then(() => {
-        req.flash('success_messages', '成功更新資料')
+        req.flash('success_messages', 'Update success!')
         res.redirect('/admin/patients')
       })
       .catch(err => next(err))
@@ -90,7 +90,7 @@ const adminController = {
   deletePatient: (req, res, next) => {
     return Patient.findByPk(req.params.id)
       .then(patient => {
-        if (!patient) throw new Error('查詢不到數據紀錄!')
+        if (!patient) throw new Error('Cannot find patient data!')
         return patient.destroy()
       })
       .then(() => res.redirect('/admin/patients'))

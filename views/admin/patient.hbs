@@ -3,15 +3,19 @@
 {{> admin-patient-data-tabs route='notes'}}
 
 {{#each patient.Notes}}
+  <form action="/admin/notes/{{this.id}}?_method=DELETE" method="POST" class="float-end">
+    <button type="submit" class="btn btn-danger" onclick="return confirm('Confirm the deletion？')">Delete</button>
+  </form>
+
   <blockquote class="blockquote mb-0">
     <h4><a href="/users/{{this.User.id}}">{{this.User.name}}</a></h4>
     <p>{{this.text}}</p>
-    <footer class="blockquote-footer">{{relativeTimeFromNow this.createdAt}}</footer>
+    <footer class="blockquote-footer text-end">{{simpleDateTime this.createdAt}}</footer>
   </blockquote>
   <hr />
 {{/each}}
 
-<form action="/admin/patients/{{patient.id}}/notes" method="POST">
+<form action="/admin/notes" method="POST">
   <div class="form-row mb-3">
     <label class="form-label fw-bold" for="text">Send your note：</label>
     <textarea class="form-control" id="text" name="text" rows="3"></textarea>

@@ -24,14 +24,14 @@ const noteController = {
   postNote: (req, res, next) => {
     const { patientId, text } = req.body
     const userId = req.user.id
-    if (!text) throw new Error('不能發送空白評論!')
+    if (!text) throw new Error('Require content!')
     return Promise.all([
       User.findByPk(userId),
       Patient.findByPk(patientId)
     ])
       .then(([user, patientData]) => {
-        if (!user) throw new Error('使用者不存在')
-        if (!patientData) throw new Error('此筆資料不存在')
+        if (!user) throw new Error('The user is not exist!')
+        if (!patientData) throw new Error('Patient data is not exist!')
         return Note.create({
           text,
           userId,
@@ -41,6 +41,15 @@ const noteController = {
       .then(() => {
         res.redirect(`/admin/patients/${patientId}`)
       })
+      .catch(err => next(err))
+  },
+  deleteNote: (req, res, next) => {
+    return Note.findByPk(req.params.id)
+      .then(note => {
+        if (!note) throw new Error('This note is not exist!')
+        return note.destroy()
+      })
+      .then(deletedNote => res.redirect(`/admin/patients/${deletedNote.patientId}`))
       .catch(err => next(err))
   }
 }

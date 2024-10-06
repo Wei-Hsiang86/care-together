@@ -10,8 +10,8 @@ router.put('/patients/:id', adminController.putPatient)
 router.delete('/patients/:id', adminController.deletePatient)
 router.get('/patients', adminController.getPatients)
 
-// router.delete('/patients/:id/notes/:noteId', noteController.deleteNote)
-router.post('/patients/:id/notes', noteController.postNote)
+router.delete('/notes/:id', noteController.deleteNote)
+router.post('/notes', noteController.postNote)
 
 router.get('/', (req, res) => res.redirect('/admin/patients'))
 
