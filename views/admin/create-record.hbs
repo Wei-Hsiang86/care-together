@@ -1,9 +1,50 @@
-<form action="/admin/records" method="POST">
-  <div class="mb-4 text-center">
-    <h1 class="h3 font-weight-normal mb-3">Add Medical Record</h1>
-  </div>
+<div class="mb-4 text-center">
+  <h1 class="h3 font-weight-normal mb-3">Add Medical Record</h1>
+</div>
 
-  {{> record-form}}
+<i class="fa-regular fa-lightbulb"></i><span class="text-danger fw-bold"> Note：Just show latest 5 data.</span>
+
+<table class="table align-middle">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Temp (℃)</th>
+      <th scope="col">HR (bpm)</th>
+      <th scope="col">BP (mmHg)</th>
+      <th scope="col">Glucose AC (mg/dl)</th>
+      <th scope="col">Glucose PC (mg/dl)</th>
+      <th scope="col">Datetime (MM/DD)</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#each patients}}
+    <tr>
+      <th scope="row">{{this.itemN}}</th>
+      <td>{{../user.name}}</td>
+      <td {{#ifOut this.temperature 39 36}}class="text-danger"{{/ifOut}}>{{this.temperature}}</td>
+      <td {{#ifOut this.heartRate 100 60}}class="text-danger"{{/ifOut}}>{{this.heartRate}}</td>
+      <td {{#ifPresOut this.bloodPressure 120 90 80 60}}class="text-danger"{{/ifPresOut}}>{{this.bloodPressure}}</td>
+      <td {{#ifOut this.gluac 100 70}}class="text-danger"{{/ifOut}}>{{this.gluac}}</td>
+      <td {{#ifOut this.glupc 140 70}}class="text-danger"{{/ifOut}}>{{this.glupc}}</td>
+      <td>{{simpleDateTime this.updatedAt}}</td>
+      <td class="d-flex flex-nowrap">
+        <button type="button" class="btn btn-link">
+          <a class="btn btn-link link-primary" href="/admin/patients/{{this.id}}">Detail</a>
+        </button>
+        <button type="button" class="btn btn-link">
+          <a class="btn btn-link link-primary" href="/admin/users/{{this.userId}}/allData">All Data</a>
+        </button>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<form action="/admin/records" method="POST">
+  {{> admin-record-form}}
 
   <button type="submit" class="btn btn-primary">Submit</button>
   <a class="btn btn-outline-secondary" href="javascript:history.back()">Back</a>
