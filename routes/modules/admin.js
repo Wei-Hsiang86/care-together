@@ -14,6 +14,8 @@ router.delete('/notes/:id', noteController.deleteNote)
 router.post('/notes', noteController.postNote)
 
 router.get('/users/:userId/allData', adminController.getAllData)
+router.patch('/users/:userId', adminController.patchUser)
+router.get('/users', adminController.getPatientList)
 
 router.get('/', (req, res) => res.redirect('/admin/patients'))
 

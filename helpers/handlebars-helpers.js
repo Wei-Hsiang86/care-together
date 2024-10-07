@@ -20,6 +20,11 @@ module.exports = {
       .tz('Asia/Taipei')
       .format('MM/DD HH:mm')
   },
+  fullDate: date => {
+    return dayjs(date)
+      .tz('Asia/Taipei')
+      .format('YYYY/MM/DD')
+  },
   ifCond: function (a, b, options) {
     return a === b ? options.fn(this) : options.inverse(this)
   },

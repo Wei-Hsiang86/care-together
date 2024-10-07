@@ -45,7 +45,8 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     isAdmin: DataTypes.BOOLEAN,
     photo: DataTypes.STRING,
-    intro: DataTypes.TEXT
+    intro: DataTypes.TEXT,
+    danger: DataTypes.BOOLEAN
   }, {
     scopes: {
       findFriendInfo (list) {

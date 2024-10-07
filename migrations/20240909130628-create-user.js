@@ -19,7 +19,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       is_admin: {
-        defaultValue: false,
         type: Sequelize.BOOLEAN
       },
       created_at: {

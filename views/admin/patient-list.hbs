@@ -1,0 +1,66 @@
+<h1>Patient List</h1>
+
+{{> admin-patient-tabs route='patientsList'}}
+
+<table class="table align-middle">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Entry time</th>
+      <th scope="col">Dangerous</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#each patientList}}
+    <tr>
+      <th scope="row">{{this.itemN}}</th>
+      <td>{{this.name}}</td>
+      <td>{{this.email}}</td>
+      <td>{{fullDate this.createdAt}}</td>
+      <td>
+        <form action="/admin/users/{{this.id}}?_method=PATCH" method="POST" style="display: inline;">
+          {{!-- <button type="submit" class="btn btn-link link-danger">set</button> --}}
+          <input type="checkbox" name="isDanger" value="yes" onclick="this.form.submit()" {{#if this.danger}}checked{{/if}}>
+          {{#if this.danger}}<i class="fa-solid fa-triangle-exclamation fa-lg text-danger ms-4"></i>{{/if}}
+        </form>
+      </td>
+      <td class="d-flex flex-nowrap">
+        <button type="button" class="btn btn-link">
+          <a class="btn btn-link link-primary" href="/admin/users/{{this.userId}}/allData">All Data</a>
+        </button>
+        <button type="button" class="btn btn-link">
+          <a class="btn btn-link link-primary" href="/admin/records/create">Write Records</a>
+        </button>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<nav class="mt-3" aria-label="page navigation">
+  <ul class="pagination justify-content-center">
+    <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
+      <a class="page-link" href="/admin/users?page={{pagination.prev}}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {{#each pagination.pages}}
+    {{#ifCond this ../pagination.currentPage}}
+    <li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
+    {{else}}
+    <li class="page-item">
+      <a class="page-link" href="/admin/users?page={{this}}">{{this}}</a>
+    </li>
+    {{/ifCond}}
+    {{/each}}
+    <li class="page-item {{#ifCond pagination.currentPage pagination.totalPage}}disabled{{/ifCond}}">
+      <a class="page-link" href="/admin/users?page={{pagination.next}}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>

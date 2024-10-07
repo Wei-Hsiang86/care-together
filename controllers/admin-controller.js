@@ -7,6 +7,7 @@ const adminController = {
     const page = Number(req.query.page) || 1
     const limit = Number(req.query.limit) || defaultLimit
     const offset = getOffset(limit, page)
+
     return Patient.findAndCountAll({
       include: [
         { model: User, attributes: ['name'] }
@@ -54,7 +55,7 @@ const adminController = {
       .catch(err => next(err))
   },
   editPatient: (req, res, next) => {
-    Patient.findByPk(req.params.id, {
+    return Patient.findByPk(req.params.id, {
       raw: true
     })
       .then(patient => {
@@ -69,7 +70,7 @@ const adminController = {
     if (!heartRate) throw new Error('Require heart rate!')
     if (!bloodPressure) throw new Error('Require blood pressure!')
 
-    Patient.findByPk(req.params.id)
+    return Patient.findByPk(req.params.id)
       .then(patient => {
         if (!patient) throw new Error('Cannot find patient data!')
 
@@ -95,6 +96,52 @@ const adminController = {
         return patient.destroy()
       })
       .then(() => res.redirect('/admin/patients'))
+      .catch(err => next(err))
+  },
+  getPatientList: (req, res, next) => {
+    const defaultLimit = 10
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || defaultLimit
+    const offset = getOffset(limit, page)
+
+    return User.findAndCountAll({
+      where: { isAdmin: 0 },
+      attributes: {
+        exclude: ['password']
+      },
+      limit,
+      offset,
+      raw: true
+    })
+      .then(list => {
+        const patientList = list.rows.map((item, index) => ({
+          ...item,
+          itemN: index + 1
+        }))
+        res.render('admin/patient-list', {
+          patientList,
+          pagination: getPagination(limit, page, list.count)
+        })
+      })
+      .catch(err => next(err))
+  },
+  patchUser: (req, res, next) => {
+    const userId = req.params.userId
+    const { isDanger } = req.body
+    console.log(userId, isDanger)
+
+    return User.findByPk(userId)
+      .then(user => {
+        if (!user) throw new Error('User is not exist!')
+        if (user.isAdmin === 1) {
+          req.flash('error_messages', 'Cannot set root to danger!')
+          return res.redirect('back')
+        }
+        return user.update({
+          danger: !user.danger
+        })
+      })
+      .then(() => res.redirect('/admin/users'))
       .catch(err => next(err))
   },
   getAllData: (req, res, next) => {
@@ -132,6 +179,7 @@ const adminController = {
           tab
         })
       })
+      .catch(err => next(err))
   }
 }
 module.exports = adminController
