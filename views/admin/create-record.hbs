@@ -23,7 +23,7 @@
     {{#each patients}}
     <tr>
       <th scope="row">{{this.itemN}}</th>
-      <td>{{../user.name}}</td>
+      <td>{{../userProfile.name}}</td>
       <td {{#ifOut this.temperature 39 36}}class="text-danger"{{/ifOut}}>{{this.temperature}}</td>
       <td {{#ifOut this.heartRate 100 60}}class="text-danger"{{/ifOut}}>{{this.heartRate}}</td>
       <td {{#ifPresOut this.bloodPressure 120 90 80 60}}class="text-danger"{{/ifPresOut}}>{{this.bloodPressure}}</td>
@@ -46,6 +46,7 @@
 <form action="/admin/records" method="POST">
   {{> admin-record-form}}
 
+  <input type="hidden" name="patientId" value="{{userProfile.id}}" />
   <button type="submit" class="btn btn-primary">Submit</button>
   <a class="btn btn-outline-secondary" href="javascript:history.back()">Back</a>
 </form>
