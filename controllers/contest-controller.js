@@ -63,7 +63,6 @@ const contestController = {
     if (!keyword) throw new Error('請輸入欲查詢者姓名')
     if (keyword === req.user.name) throw new Error('請查詢自己以外的使用者')
 
-    console.log(req.query)
     return User.findOne({
       where: {
         name: keyword

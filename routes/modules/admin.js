@@ -14,6 +14,8 @@ router.get('/patients', adminController.getPatients)
 router.delete('/notes/:id', noteController.deleteNote)
 router.post('/notes', noteController.postNote)
 
+router.post('/users/danger', adminController.getPatientList)
+router.get('/users/search', adminController.searchUser)
 router.get('/users/:userId/allData', adminController.getAllData)
 router.patch('/users/:userId', adminController.patchUser)
 router.get('/users', adminController.getPatientList)

@@ -103,9 +103,11 @@ const adminController = {
     const page = Number(req.query.page) || 1
     const limit = Number(req.query.limit) || defaultLimit
     const offset = getOffset(limit, page)
+    const { showDanger } = req.body
+    console.log(showDanger)
 
     return User.findAndCountAll({
-      where: { isAdmin: 0 },
+      where: showDanger ? { danger: 1 } : { isAdmin: 0 },
       attributes: {
         exclude: ['password']
       },
@@ -120,10 +122,33 @@ const adminController = {
         }))
         res.render('admin/patient-list', {
           patientList,
-          pagination: getPagination(limit, page, list.count)
+          pagination: getPagination(limit, page, list.count),
+          needPaginate: true,
+          noContent: !patientList.length
         })
       })
       .catch(err => next(err))
+  },
+  searchUser: (req, res, next) => {
+    const keyword = req.query.adminSearchUser.trim()
+    if (!keyword) throw new Error('Please enter name.')
+    if (keyword === req.user.name) throw new Error('Cannot search yourself.')
+
+    return User.findOne({
+      where: {
+        name: keyword
+      },
+      raw: true
+    })
+      .then(searchedUser => {
+        if (!searchedUser) throw new Error('Cannot find the patient.')
+        console.log(searchedUser)
+        return res.render('admin/patient-list', {
+          keyword,
+          patientList: [searchedUser],
+          needPaginate: false
+        })
+      })
   },
   patchUser: (req, res, next) => {
     const userId = req.params.userId
