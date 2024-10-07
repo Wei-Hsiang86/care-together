@@ -24,8 +24,8 @@ router.get('/users', adminController.getPatientList)
 // router.put('/records/:id', recordController.putRecord)
 // router.delete('/records/:id', recordController.deleteRecord)
 router.get('/records/create/:userId', recordController.createRecord)
+router.get('/users/:userId/medRecords', recordController.getAllRecord)
 router.post('/records', recordController.postRecord)
-// router.get('/records', recordController.getAllRecord)
 
 router.get('/', (req, res) => res.redirect('/admin/patients'))
 

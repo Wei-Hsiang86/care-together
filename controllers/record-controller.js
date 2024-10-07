@@ -1,4 +1,5 @@
 const { Record, User, Patient } = require('../models')
+const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 const recordController = {
   createRecord: (req, res, next) => {
@@ -44,6 +45,39 @@ const recordController = {
       .then(() => {
         req.flash('success_messages', 'Add record success!')
         res.redirect('/admin/users')
+      })
+      .catch(err => next(err))
+  },
+  getAllRecord: (req, res, next) => {
+    const userId = req.params.userId
+    const defaultLimit = 2
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || defaultLimit
+    const offset = getOffset(limit, page)
+
+    return Promise.all([
+      User.findByPk(userId),
+      Record.findAndCountAll({
+        where: {
+          userId
+        },
+        order: [['createdAt', 'DESC']],
+        limit,
+        offset,
+        raw: true
+      })
+    ])
+      .then(([user, record]) => {
+        const userProfile = user.toJSON()
+        const records = record.rows
+        const tab = { userId }
+        res.render('admin/all-records', {
+          userProfile,
+          records,
+          pagination: getPagination(limit, page, record.count),
+          tab,
+          noContent: !records.length
+        })
       })
       .catch(err => next(err))
   }
