@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Friendship, { foreignKey: 'uid', as: 'Friends' })
       User.hasMany(models.Comment, { foreignKey: 'userId' })
       User.hasMany(models.Note, { foreignKey: 'userId' })
+      User.hasMany(models.Record, { foreignKey: 'userId' })
       User.belongsToMany(User, {
         through: {
           model: models.Acquaintance,
