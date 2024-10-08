@@ -43,8 +43,8 @@ const recordController = {
         })
       })
       .then(() => {
-        req.flash('success_messages', 'Add record success!')
-        res.redirect('/admin/users')
+        req.flash('success_messages', 'Success adding the record!')
+        res.redirect(`/admin/records/all/${patientId}`)
       })
       .catch(err => next(err))
   },
@@ -69,9 +69,20 @@ const recordController = {
           medicalRecord
         })
       })
-      .then(() => {
+      .then(yo => {
         req.flash('success_messages', 'Record was successfully to update.')
-        return res.redirect(`/admin/users/${patientId}/medRecords`)
+        return res.redirect(`/admin/records/all/${patientId}`)
+      })
+      .catch(err => next(err))
+  },
+  deleteRecord: (req, res, next) => {
+    return Record.findByPk(req.params.id)
+      .then(record => {
+        if (!record) throw new Error('Cannot find the record!')
+        return record.destroy()
+      })
+      .then(deletedRecord => {
+        return res.redirect(`/admin/records/all/${deletedRecord.userId}`)
       })
       .catch(err => next(err))
   },
@@ -95,6 +106,7 @@ const recordController = {
       })
     ])
       .then(([user, record]) => {
+        if (!user) throw new Error('User is not exist!')
         const userProfile = user.toJSON()
         const records = record.rows
         const tab = { userId }

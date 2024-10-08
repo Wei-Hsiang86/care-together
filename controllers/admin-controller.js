@@ -104,7 +104,6 @@ const adminController = {
     const limit = Number(req.query.limit) || defaultLimit
     const offset = getOffset(limit, page)
     const { showDanger } = req.body
-    console.log(showDanger)
 
     return User.findAndCountAll({
       where: showDanger ? { danger: 1 } : { isAdmin: 0 },
