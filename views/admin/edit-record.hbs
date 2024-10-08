@@ -1,0 +1,13 @@
+<div class="mb-4 text-center">
+  <h1 class="h3 font-weight-normal mb-3">Edit Record</h1>
+</div>
+
+<form action="/admin/records/{{record.id}}?_method=PUT" method="POST">
+  {{> admin-record-form}}
+
+  <input type="hidden" name="patientId" value="{{userId}}" />
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <a class="btn btn-outline-secondary" href="javascript:history.back()">Back</a>
+</form>
+
+<h1>{{record.id}}</h1>

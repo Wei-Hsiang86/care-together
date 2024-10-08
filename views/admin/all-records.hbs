@@ -15,15 +15,11 @@
 
         <div class="col-md-8 d-flex justify-content-end">
           <div class="card-body">
-            <h5 class="card-title"><i class="fa-regular fa-circle-user"></i> <strong>姓名：{{userProfile.name}}</strong>
+            <h5 class="card-title"><i class="fa-regular fa-circle-user"></i> <strong>Name：{{userProfile.name}}</strong>
             </h5>
-            <p class="card-text"><i class="fa-solid fa-at fa-lg"></i> <strong>信箱：{{userProfile.email}}</strong></p>
-            <p class="card-text"><i class="fa-regular fa-address-book fa-lg"></i> <strong>自我介紹：</strong></p>
+            <p class="card-text"><i class="fa-solid fa-at fa-lg"></i> <strong>Email：{{userProfile.email}}</strong></p>
+            <p class="card-text"><i class="fa-regular fa-address-book fa-lg"></i> <strong>Intro：</strong></p>
             <p class="card-text">{{userProfile.intro}}</p>
-          </div>
-
-          <div class="align-self-end m-3">
-            <a class="btn btn-outline-secondary" href="javascript:history.back()">返回</a>
           </div>
         </div>
       </div>
@@ -31,18 +27,33 @@
   </div>
 </div>
 
-{{> admin-user-data-tabs route='allRecords'}}
+<div class="d-flex align-items-center">
+  {{> admin-user-data-tabs route='allRecords'}}
 
-{{#if noContent}}
-<p class="fs-3 text-center">No Records</p>
-{{/if}}
+  <button type="button" class="btn btn-link ms-auto">
+    <a class="btn btn-outline-success" href="/admin/records/create/{{tab.userId}}">Write Records</a>
+  </button>
+
+  <div>
+    <a class="btn btn-outline-secondary" href="javascript:history.back()">Back</a>
+  </div>
+</div>
 
 <div class="row mt-2">
   {{#each records}}
   <div class="col-6">
     <div class="card">
-      <div class="card-header">
-        <strong>Record time : {{fullDateTime this.createdAt}}</strong>
+      <div class="card-header d-flex align-items-center">
+        <span class="me-auto"><strong>Record time : {{fullDateTime this.createdAt}}</strong></span>
+        <span>
+          <button type="button" class="btn p-0">
+            <a class="btn" href="/admin/records/{{this.id}}/{{../userProfile.id}}/edit"><i class="fa-regular fa-pen-to-square fa-lg"></i></a>
+          </button>
+
+          <button type="button" class="btn">
+            <i class="fa-solid fa-trash fa-lg"></i>
+          </button>
+        </span>
       </div>
         <p class="m-2">{{this.medicalRecord}}</p>
       <div class="card-body">
@@ -51,6 +62,10 @@
   </div>
   {{/each}}
 </div>
+
+{{#if noContent}}
+<p class="fs-3 text-center">No Records</p>
+{{/if}}
 
 <nav class="mt-3" aria-label="page navigation">
   <ul class="pagination justify-content-center">

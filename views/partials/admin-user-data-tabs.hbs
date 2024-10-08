@@ -1,9 +1,9 @@
-<ul class="nav nav-pills mt-1 mb-4">
+<ul class="nav nav-pills">
   <li class="nav-item">
-    <a class="nav-link {{#ifCond route 'allData'}}active{{/ifCond}}" href="/admin/users/{{tab.userId}}/allData">ALL DATA</a>
+    <a class="nav-link {{#ifCond route 'allData'}}active{{/ifCond}}" href="/admin/patients/all/{{tab.userId}}">ALL DATA</a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link {{#ifCond route 'allRecords'}}active{{/ifCond}}" href="/admin/users/{{tab.userId}}/medRecords">MEDICAL RECORDS</a>
+    <a class="nav-link {{#ifCond route 'allRecords'}}active{{/ifCond}}" href="/admin/records/all/{{tab.userId}}">MEDICAL RECORDS</a>
   </li>
 </ul>

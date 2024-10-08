@@ -48,6 +48,33 @@ const recordController = {
       })
       .catch(err => next(err))
   },
+  getEditRecord: (req, res, next) => {
+    const recordId = req.params.id
+    const userId = req.params.userId
+    return Record.findByPk(recordId)
+      .then(rawRecord => {
+        if (!rawRecord) throw new Error('Cannot find the record!')
+        return res.render('admin/edit-record', { record: rawRecord.toJSON(), userId })
+      })
+      .catch(err => next(err))
+  },
+  putRecord: (req, res, next) => {
+    const recordId = req.params.id
+    const { patientId, medicalRecord } = req.body
+    return Record.findByPk(recordId)
+      .then(rawRecord => {
+        if (!rawRecord) throw new Error('Cannot find the record!')
+
+        return rawRecord.update({
+          medicalRecord
+        })
+      })
+      .then(() => {
+        req.flash('success_messages', 'Record was successfully to update.')
+        return res.redirect(`/admin/users/${patientId}/medRecords`)
+      })
+      .catch(err => next(err))
+  },
   getAllRecord: (req, res, next) => {
     const userId = req.params.userId
     const defaultLimit = 2
