@@ -204,6 +204,9 @@ const adminController = {
         })
       })
       .catch(err => next(err))
+  },
+  abgCalculator: (req, res, next) => {
+    res.render('admin/abg-calculator')
   }
 }
 module.exports = adminController
