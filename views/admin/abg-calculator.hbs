@@ -3,25 +3,38 @@
 {{> admin-tabs route='abgCalculator'}}
 
 <form action="/admin/abgCalculator" method="POST">
-
-  <div class="form-row mb-3">
-    <label class="form-label" for="pH">pH</label>
-    <input class="form-control" type="number" name="pH" id="pH" placeholder="Please enter pH" step="0.1" min="0" max="15" value="{{patient.pH}}" required>
+  <div class="form-row mb-3 text-center text-nowrap {{data.type}} fs-3">
+    <p>{{data.abgResult}}</p>
   </div>
 
   <div class="form-row mb-3">
-    <label class="form-label" for="PaO2">PaO2</label>
-    <input class="form-control" type="number" name="PaO2" id="PaO2" placeholder="Please enter PaO2" min="0" value="{{patient.PaO2}}" required>
+    <label class="form-label" for="pH">pH (*required)</label>
+    <input class="form-control" type="number" name="pH" id="pH" placeholder="Please enter pH" step="0.1" min="0" max="15" value="{{data.pH}}" required>
   </div>
 
   <div class="form-row mb-3">
-    <label class="form-label" for="PaCO2">PaCO2</label>
-    <input class="form-control" type="number" name="PaCO2" id="PaCO2" placeholder="Please enter PaCO2" min="0" value="{{patient.PaCO2}}" required>
+    <label class="form-label" for="PaO2">PaO2 (*required)</label>
+    <input class="form-control" type="number" name="PaO2" id="PaO2" placeholder="Please enter PaO2" min="0" value="{{data.PaO2}}" required>
   </div>
 
   <div class="form-row mb-3">
-    <label class="form-label" for="HCO3">HCO3‾</label>
-    <input class="form-control" type="number" name="HCO3" id="HCO3" placeholder="Please enter HCO3" min="0" value="{{patient.HCO3}}" required>
+    <label class="form-label" for="PaCO2">PaCO2 (*required)</label>
+    <input class="form-control" type="number" name="PaCO2" id="PaCO2" placeholder="Please enter PaCO2" min="0" value="{{data.PaCO2}}" required>
+  </div>
+
+  <div class="form-row mb-3">
+    <label class="form-label" for="HCO3">HCO3‾ (*required)</label>
+    <input class="form-control" type="number" name="HCO3" id="HCO3" placeholder="Please enter HCO3" min="0" value="{{data.HCO3}}" required>
+  </div>
+  
+  <div class="form-row mb-3">
+    <label class="form-label" for="Na">Na+</label>
+    <input class="form-control" type="number" name="Na" id="Na" placeholder="Please enter Na+" min="0" value="{{data.Na}}">
+  </div>
+
+  <div class="form-row mb-3">
+    <label class="form-label" for="Cl">Cl-</label>
+    <input class="form-control" type="number" name="Cl" id="Cl" placeholder="Please enter Cl-" min="0" value="{{data.Cl}}">
   </div>
 
   <button type="submit" class="btn btn-primary">Calculate</button>

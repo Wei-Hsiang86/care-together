@@ -12,6 +12,7 @@ router.delete('/patients/:id', adminController.deletePatient)
 router.put('/patients/:id', adminController.putPatient)
 router.get('/patients', adminController.getPatients)
 
+router.post('/abgCalculator', adminController.abgCalculate)
 router.get('/abgCalculator', adminController.abgCalculator)
 
 router.delete('/notes/:id', noteController.deleteNote)

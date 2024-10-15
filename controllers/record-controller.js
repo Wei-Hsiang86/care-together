@@ -34,6 +34,8 @@ const recordController = {
   },
   postRecord: (req, res, next) => {
     const { patientId, medicalRecord } = req.body
+    if (!medicalRecord) throw new Error('Record required!')
+
     return User.findByPk(patientId)
       .then(user => {
         if (!user) throw new Error('Cannot find the user!')
