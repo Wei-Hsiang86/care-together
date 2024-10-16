@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       findApproveAc (fid, nowUid) {
         return {
           where: {
-            situation: 'pending',
+            situation: 'approved',
             accepterId: nowUid,
             applierId: fid
           }
