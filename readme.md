@@ -27,10 +27,24 @@ create database forum;
   * password: 123456
 
 ## 3. 功能介紹
-新增當天個人資料
+### 使用者－患者
+* 新增當天個人資料
 ![image](https://github.com/Wei-Hsiang86/care-together/blob/main/public/demo/add-data.gif)
 
-請至 youtube 連結觀看
+* 加好友
+![image](https://github.com/Wei-Hsiang86/care-together/blob/main/public/demo/add-friend.gif)
+
+* 對好友狀況留言
+![image](https://github.com/Wei-Hsiang86/care-together/blob/main/public/demo/add-comment.gif)
+
+### 使用者－醫事人員
+* 對患者提出叮囑
+![image](https://github.com/Wei-Hsiang86/care-together/blob/main/public/demo/add-note.gif)
+
+* 撰寫醫療紀錄
+![image](https://github.com/Wei-Hsiang86/care-together/blob/main/public/demo/add-record.gif)
+
+* 其餘請至 youtube 連結觀看
 
 # B. 開發想法
 
