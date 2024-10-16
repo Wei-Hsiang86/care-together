@@ -27,7 +27,8 @@ create database forum;
   * password: 123456
 
 ## 3. 功能介紹
-[新增當天數據](public\demo\add-data.gif)
+新增當天個人資料
+![image](https://github.com/Wei-Hsiang86/care-together/blob/main/public/demo/add-data.gif)
 
 請至 youtube 連結觀看
 
