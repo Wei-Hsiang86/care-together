@@ -27,6 +27,8 @@ create database forum;
   * password: 123456
 
 ## 3. 功能介紹
+[新增當天數據](public\demo\add-data.gif)
+
 請至 youtube 連結觀看
 
 # B. 開發想法
