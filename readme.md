@@ -14,7 +14,10 @@ create database forum;
 ```
 
 ## 2. 共用帳號
-請一律設定下面範例帳號以方便使用，或是參考 seeders 中的設定
+部屬：https://care-together.hnd1.zeabur.app/
+帳號密碼請參照下方
+
+若是重新建立的專案，請以下方範例設定帳號密碼，或是參考 seeders 中的設定
 * 第一組帳號是醫護人員帳號：
   * email: root@example.com
   * password: 123456
