@@ -43,21 +43,19 @@ Example Website: https://care-together.hnd1.zeabur.app/ (帳號密碼，請參�
 npm install
 ```
 
-2. 設定資料庫  
-請留意，這裡需要與 config/config.json 中設定的一致
+2. 設定資料庫：請留意，這裡需要與 config/config.json 中設定的一致
 ```
 // 到 MySQL 去建立資料庫
 create database forum;
 ```
 
-3. 共用帳號  
-可以依下方範例設定帳號密碼
+3. 共用帳號：可以依下方範例設定帳號密碼
 
-* 第一組帳號是醫護人員帳號：
+第一組帳號是醫護人員帳號：
   * email: root@example.com
   * password: 123456
 
-* 第二、三組等...，其餘多組帳號為使用者(client)帳號：
+第二、三組等...，其餘多組帳號為使用者(client)帳號：
   * email: user1@example.com
   * password: 123456
 
@@ -67,10 +65,10 @@ create database forum;
 # Others
 
 * 未來展望：  
-  希望可以連結 line，讓個案可以在聊天室輸入資訊，就可以直接更新、獲得資訊
+希望可以連結 line，讓個案可以在聊天室輸入資訊，就可以直接更新、獲得資訊
 
 * 製作時思考的地方與難點：  
-  1. 朋友關係的 data table 設計，是否需要額外新增一個 friendship table
-  2. 承第一點，如果多設計一個資料表，主要是為了查詢方便，如果後續使用者想將朋友設定群組也會較為方便，但缺點就是這個 table 可能會越來越肥大
-  3. acquaintance 資料表，也許可以新增像是：送出邀請時間、送出文字等等
-  4. 另外，好友刪除的時機點也糾結了一番。要在通過邀請時就刪除 acquaintance 的相關資料，還是要通通等到取消好友關係再刪除
+1. 朋友關係的 data table 設計，是否需要額外新增一個 friendship table
+2. 承第一點，如果多設計一個資料表，主要是為了查詢方便，如果後續使用者想將朋友設定群組也會較為方便，但缺點就是這個 table 可能會越來越肥大
+3. acquaintance 資料表，也許可以新增像是：送出邀請時間、送出文字等等
+4. 另外，好友刪除的時機點也糾結了一番。要在通過邀請時就刪除 acquaintance 的相關資料，還是要通通等到取消好友關係再刪除
