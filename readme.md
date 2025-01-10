@@ -1,6 +1,7 @@
 # About Care Together
 
 Example Website: https://care-together.hnd1.zeabur.app/ (帳號密碼，請參照下方共用帳號的部分)
+(目前撤掉服務了，不好意思)
 
 有鑑於現代慢性病年齡逐漸下降，藉由一同互助關注，勝過獨自努力打拼，因此設計這樣的資療資訊平台。對使用者而言，不同的角色，有不同的功能可以操作。
 
