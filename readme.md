@@ -37,7 +37,7 @@ Example Website: https://care-together.hnd1.zeabur.app/ (帳號密碼，請參�
 
 ### 其餘請至 youtube 連結觀看
 
-# How to use?
+## How to use?
 
 1. Initialize
 ```
@@ -63,7 +63,7 @@ create database forum;
   * email: user2@example.com
   * password: 123456
 
-# Others
+## Others
 
 * 未來展望：希望可以連結 line，讓個案可以在聊天室輸入資訊，就可以直接更新、獲得資訊
 
